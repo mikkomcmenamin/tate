@@ -7,7 +7,7 @@ part of 'drawing_mode_controller.dart';
 // **************************************************************************
 
 String _$drawingModeControllerHash() =>
-    r'a0a15e77e25b2614964ba4782bf4b4b7280d1614';
+    r'eee2166ac50da3b746fbdc13391877fb9e374e7c';
 
 /// See also [DrawingModeController].
 @ProviderFor(DrawingModeController)
