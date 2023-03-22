@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tate/controllers/bounding_box_controller.dart';
 import 'package:tate/controllers/drawing_mode_controller.dart';
+import 'package:tate/models/bounding_box.dart';
 
 import 'bounding_box_painter.dart';
 
@@ -16,9 +19,6 @@ class ImageWidget extends HookConsumerWidget {
 
     final transformation = useState(Matrix4.identity());
 
-    final startPoint = useState<Offset?>(null);
-    final endPoint = useState<Offset?>(null);
-
     useEffect(() {
       transformationController.addListener(() {
         transformation.value = transformationController.value;
@@ -28,41 +28,44 @@ class ImageWidget extends HookConsumerWidget {
 
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
-    return GestureDetector(
-      onTapDown: (details) {
-        if (drawingMode == EDrawingMode.boundingBox) {
-          startPoint.value = details.localPosition;
-          print('set startpoint to ${startPoint.value}');
-        }
-      },
-      onPanUpdate: (details) {
-        if (drawingMode == EDrawingMode.boundingBox) {
-          endPoint.value = details.localPosition;
-          print('set endpoint to ${endPoint.value}');
-        }
-      },
-      onPanEnd: (details) {
-        //ref.read(drawingModeControllerProvider.notifier).setDrawingMode(EDrawingMode.none);
-        //endPoint.value = null;
-        //startPoint.value = null;
-      },
-      child: InteractiveViewer(
-        transformationController: transformationController,
-        panEnabled: true,
-        scaleEnabled: true,
-        boundaryMargin: const EdgeInsets.all(2),
-        minScale: 0.1,
-        maxScale: 10.0,
-        child: Stack(
-          children: [
-            Image(image: imageProvider),
-            CustomPaint(
-              painter: BoundingBoxPainter(
-                  matrix: transformation.value, startPoint: startPoint.value, endPoint: endPoint.value
-                  // Pass other required parameters
-                  ),
-            ),
-          ],
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onHover: (event) {},
+      onEnter: (event) {},
+      onExit: (event) {},
+      child: Listener(
+        onPointerDown: (event) {
+          if (event.buttons == kSecondaryMouseButton) {
+            return;
+          }
+          final box = BoundingBox(startPoint: event.localPosition, endPoint: event.localPosition);
+          ref.read(boundingBoxControllerProvider.notifier).addBox(box);
+        },
+        onPointerMove: (event) {
+          if (event.buttons == kSecondaryMouseButton) {
+            return;
+          }
+          ref.read(boundingBoxControllerProvider.notifier).updateCurrentBox(event.localPosition);
+        },
+        onPointerUp: (event) {},
+        child: InteractiveViewer(
+          transformationController: transformationController,
+          panEnabled: true,
+          scaleEnabled: true,
+          boundaryMargin: const EdgeInsets.all(2),
+          minScale: 0.1,
+          maxScale: 10.0,
+          child: Stack(
+            children: [
+              Image(image: imageProvider),
+              CustomPaint(
+                painter: BoundingBoxPainter(
+                  matrix: transformation.value,
+                  boxes: ref.watch(boundingBoxControllerProvider),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
