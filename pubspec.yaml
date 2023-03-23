@@ -37,6 +37,7 @@ dependencies:
   freezed_annotation:
   freezed:
   flutter_svg:
+  flutter_hooks:
   hooks_riverpod:
   riverpod_annotation:
   vector_math:

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/controllers/bounding_box_controller.dart';
 import 'package:tate/controllers/drawing_mode_controller.dart';
+import 'package:tate/controllers/input_controller.dart';
 import 'package:tate/models/bounding_box.dart';
 
 import 'bounding_box_painter.dart';
@@ -26,6 +27,8 @@ class ImageWidget extends HookConsumerWidget {
       return transformationController.dispose;
     }, []);
 
+    final panEnabled = usePanControl(context);
+
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
     return MouseRegion(
@@ -35,14 +38,14 @@ class ImageWidget extends HookConsumerWidget {
       onExit: (event) {},
       child: Listener(
         onPointerDown: (event) {
-          if (event.buttons == kSecondaryMouseButton) {
+          if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
             return;
           }
           final box = BoundingBox(startPoint: event.localPosition, endPoint: event.localPosition);
           ref.read(boundingBoxControllerProvider.notifier).addBox(box);
         },
         onPointerMove: (event) {
-          if (event.buttons == kSecondaryMouseButton) {
+          if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
             return;
           }
           ref.read(boundingBoxControllerProvider.notifier).updateCurrentBox(event.localPosition);
@@ -50,7 +53,7 @@ class ImageWidget extends HookConsumerWidget {
         onPointerUp: (event) {},
         child: InteractiveViewer(
           transformationController: transformationController,
-          panEnabled: true,
+          panEnabled: panEnabled.value,
           scaleEnabled: true,
           boundaryMargin: const EdgeInsets.all(2),
           minScale: 0.1,

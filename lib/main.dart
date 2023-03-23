@@ -30,7 +30,7 @@ class MyApp extends ConsumerWidget {
     print('main');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: Focus(child: MainPage()),
       theme: ThemeData(
         fontFamily: 'Inconsolata',
         primaryColor: Colors.cyan,
