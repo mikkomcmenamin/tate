@@ -64,6 +64,14 @@ class ImageWidget extends HookConsumerWidget {
                   boxes: ref.watch(boundingBoxControllerProvider),
                 ),
               ),
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: TextButton(
+                  onPressed: () => ref.read(boundingBoxControllerProvider.notifier).clearBoxes(),
+                  child: Text('Clear'),
+                ),
+              ),
             ],
           ),
         ),

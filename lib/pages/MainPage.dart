@@ -13,7 +13,7 @@ class MainPage extends ConsumerWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: false,
-          title: const Text('TATE'),
+          title: const Text('tate'),
         ),
         body: Row(
           children: [SideBar(), Expanded(child: ImageAnnotationView())],
