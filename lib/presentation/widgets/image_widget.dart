@@ -59,8 +59,12 @@ class ImageWidget extends HookConsumerWidget {
           minScale: 0.1,
           maxScale: 10.0,
           child: Stack(
+            fit: StackFit.expand,
             children: [
-              Image(image: imageProvider),
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Image(image: imageProvider),
+              ),
               CustomPaint(
                 painter: BoundingBoxPainter(
                   matrix: transformation.value,
