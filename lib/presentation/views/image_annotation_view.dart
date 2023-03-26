@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 
-import 'image_widget.dart';
+import '../widgets/image_widget.dart';
 
 class ImageAnnotationView extends ConsumerWidget {
   const ImageAnnotationView({

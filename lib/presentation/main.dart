@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tate/presentation/pages/main_page.dart';
+import 'package:tate/presentation/screens/main_screen.dart';
 
 part 'main.g.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends ConsumerWidget {
     print('main');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Focus(child: MainPage()),
+      home: Focus(child: MainScreen()),
       theme: ThemeData(
         fontFamily: 'Inconsolata',
         primaryColor: Colors.cyan,
