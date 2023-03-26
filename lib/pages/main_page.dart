@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/widgets/ImageAnnotationView.dart';
+import 'package:tate/widgets/image_annotation_view.dart';
+import 'package:tate/widgets/inspector_panel.dart';
 import 'package:tate/widgets/selected_images_grid.dart';
 import 'package:tate/widgets/side_bar.dart';
 
@@ -20,6 +21,7 @@ class MainPage extends ConsumerWidget {
         children: [
           SideBar(),
           Expanded(child: ImageAnnotationView()),
+          InspectorPanel(),
         ],
       ),
       bottomNavigationBar: Container(
