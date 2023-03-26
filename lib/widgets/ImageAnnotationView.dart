@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tate/controllers/image_files_controller.dart';
 
 import 'image_widget.dart';
 
@@ -13,22 +13,16 @@ class ImageAnnotationView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageFile = ref.watch(imageFileProvider);
+    final imageFiles = ref.watch(imageFileProvider);
 
-    return imageFile == null
-        ? const Center(child: Text('No image loaded.'))
-        : ImageWidget(
-            imageProvider: FileImage(File(imageFile.path)),
-          );
+    if (imageFiles.isEmpty) {
+      return const Center(child: Text('No image loaded.'));
+    }
+
+    // Display the first image in the list or change this to show a specific image based on user interaction
+    final imageFile = imageFiles.first;
+    return ImageWidget(
+      imageProvider: FileImage(File(imageFile!.path)),
+    );
   }
 }
-
-class ImageFileNotifier extends StateNotifier<XFile?> {
-  ImageFileNotifier() : super(null);
-
-  void setImageFile(XFile? file) {
-    state = file;
-  }
-}
-
-final imageFileProvider = StateNotifierProvider<ImageFileNotifier, XFile?>((ref) => ImageFileNotifier());

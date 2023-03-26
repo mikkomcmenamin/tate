@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/widgets/ImageAnnotationView.dart';
+import 'package:tate/widgets/selected_images_grid.dart';
 import 'package:tate/widgets/side_bar.dart';
 
 class MainPage extends ConsumerWidget {
@@ -11,12 +12,20 @@ class MainPage extends ConsumerWidget {
     // Add build code here
     // Inside the build method of _TestImageAnnotationPageState
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('tate'),
-        ),
-        body: Row(
-          children: [SideBar(), Expanded(child: ImageAnnotationView())],
-        ));
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Text('tate'),
+      ),
+      body: Row(
+        children: [
+          SideBar(),
+          Expanded(child: ImageAnnotationView()),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        height: 200,
+        child: SelectedImagesGrid(),
+      ),
+    );
   }
 }

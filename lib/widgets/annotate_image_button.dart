@@ -1,7 +1,7 @@
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/widgets/ImageAnnotationView.dart';
+import 'package:tate/controllers/image_files_controller.dart';
 
 class AnnotateImageButton extends ConsumerWidget {
   const AnnotateImageButton({Key? key}) : super(key: key);
@@ -9,28 +9,28 @@ class AnnotateImageButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
-      icon: Icon(
+      icon: const Icon(
         Icons.image,
         size: 30,
       ),
       onPressed: () async {
-        final pickedFile = await _loadImage();
-        if (pickedFile != null) {
-          ref.read(imageFileProvider.notifier).setImageFile(pickedFile);
+        final pickedFiles = await _loadImages();
+        if (pickedFiles.isNotEmpty) {
+          ref.read(imageFileProvider.notifier).setImageFiles(pickedFiles);
         }
       },
     );
   }
 }
 
-Future<XFile?> _loadImage() async {
+Future<List<XFile?>> _loadImages() async {
   const typeGroup = XTypeGroup(label: 'images', extensions: ['jpg', 'jpeg', 'png']);
-  final pickedFile = await openFile(acceptedTypeGroups: [typeGroup]);
+  final pickedFiles = await openFiles(acceptedTypeGroups: [typeGroup]);
 
-  if (pickedFile == null) {
-    print('picked file is null');
-    return null;
+  if (pickedFiles.isEmpty) {
+    print('picked file list is empty');
+    return [];
   }
 
-  return pickedFile;
+  return pickedFiles;
 }
