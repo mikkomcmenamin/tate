@@ -17,14 +17,19 @@ class SelectedImagesGrid extends ConsumerWidget {
         scrollDirection: Axis.horizontal,
         itemCount: selectedImages.length,
         itemBuilder: (context, index) {
-          return Container(
-            height: 150,
-            margin: EdgeInsets.symmetric(horizontal: 2),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Image.file(
-                File(selectedImages[index]!.path),
-                fit: BoxFit.cover,
+          return InkWell(
+            onTap: () {
+              ref.read(selectedImageControllerProvider.notifier).setSelectedImage(selectedImages[index]);
+            },
+            child: Container(
+              height: 150,
+              margin: EdgeInsets.symmetric(horizontal: 2),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Image.file(
+                  File(selectedImages[index]!.path),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );

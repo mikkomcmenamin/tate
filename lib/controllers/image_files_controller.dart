@@ -19,6 +19,18 @@ class ImageFileController extends _$ImageFileController {
   }
 }
 
+@riverpod
+class SelectedImageController extends _$SelectedImageController {
+  @override
+  XFile? build() {
+    return null;
+  }
+
+  void setSelectedImage(XFile? image) {
+    state = image;
+  }
+}
+
 Future<List<XFile?>> loadImages() async {
   const typeGroup = XTypeGroup(label: 'images', extensions: ['jpg', 'jpeg', 'png']);
   final pickedFiles = await openFiles(acceptedTypeGroups: [typeGroup]);

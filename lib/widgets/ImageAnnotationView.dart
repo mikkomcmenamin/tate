@@ -13,16 +13,14 @@ class ImageAnnotationView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageFiles = ref.watch(imageFileControllerProvider);
+    final selectedImage = ref.watch(selectedImageControllerProvider);
 
-    if (imageFiles.isEmpty) {
+    if (selectedImage == null) {
       return const Center(child: Text('No image loaded.'));
     }
 
-    // Display the first image in the list or change this to show a specific image based on user interaction
-    final imageFile = imageFiles.first;
     return ImageWidget(
-      imageProvider: FileImage(File(imageFile!.path)),
+      imageProvider: FileImage(File(selectedImage.path)),
     );
   }
 }
