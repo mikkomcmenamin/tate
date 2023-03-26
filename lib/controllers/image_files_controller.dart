@@ -1,12 +1,14 @@
 import 'package:file_selector/file_selector.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final imageFileProvider = StateNotifierProvider<ImageFileController, List<XFile?>>((ref) {
-  return ImageFileController();
-});
+part 'image_files_controller.g.dart';
 
-class ImageFileController extends StateNotifier<List<XFile?>> {
-  ImageFileController() : super([]);
+@riverpod
+class ImageFileController extends _$ImageFileController {
+  @override
+  List<XFile?> build() {
+    return [];
+  }
 
   void setImageFiles(List<XFile?> files) {
     state = files;

@@ -9,7 +9,7 @@ class SelectedImagesGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedImages = ref.watch(imageFileProvider);
+    final selectedImages = ref.watch(imageFileControllerProvider);
 
     return GridView.builder(
       itemCount: selectedImages.length,

@@ -13,7 +13,7 @@ class ImageAnnotationView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageFiles = ref.watch(imageFileProvider);
+    final imageFiles = ref.watch(imageFileControllerProvider);
 
     if (imageFiles.isEmpty) {
       return const Center(child: Text('No image loaded.'));
