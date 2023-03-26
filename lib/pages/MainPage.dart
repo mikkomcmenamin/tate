@@ -23,7 +23,7 @@ class MainPage extends ConsumerWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 200,
+        height: 150,
         child: SelectedImagesGrid(),
       ),
     );

@@ -11,16 +11,25 @@ class SelectedImagesGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImages = ref.watch(imageFileControllerProvider);
 
-    return GridView.builder(
-      itemCount: selectedImages.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: selectedImages.length,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 150,
+            margin: EdgeInsets.symmetric(horizontal: 2),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Image.file(
+                File(selectedImages[index]!.path),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
       ),
-      itemBuilder: (context, index) {
-        return Image.file(File(selectedImages[index]!.path));
-      },
     );
   }
 }

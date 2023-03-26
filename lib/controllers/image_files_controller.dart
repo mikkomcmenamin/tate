@@ -18,3 +18,15 @@ class ImageFileController extends _$ImageFileController {
     state = [...state, file];
   }
 }
+
+Future<List<XFile?>> loadImages() async {
+  const typeGroup = XTypeGroup(label: 'images', extensions: ['jpg', 'jpeg', 'png']);
+  final pickedFiles = await openFiles(acceptedTypeGroups: [typeGroup]);
+
+  if (pickedFiles.isEmpty) {
+    print('picked file list is empty');
+    return [];
+  }
+
+  return pickedFiles;
+}
