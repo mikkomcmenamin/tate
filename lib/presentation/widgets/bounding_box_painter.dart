@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tate/models/bounding_box.dart';
+import 'package:tate/data/models/bounding_box.dart';
 
 class BoundingBoxPainter extends CustomPainter {
   final Matrix4 matrix;

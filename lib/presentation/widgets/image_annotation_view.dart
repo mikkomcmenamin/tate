@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/controllers/image_files_controller.dart';
+import 'package:tate/application/controllers/image_files_controller.dart';
 
 import 'image_widget.dart';
 

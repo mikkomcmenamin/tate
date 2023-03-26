@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/controllers/drawing_mode_controller.dart';
+import 'package:tate/application/controllers/drawing_mode_controller.dart';
 
 class DrawBoundingBoxButton extends ConsumerWidget {
   const DrawBoundingBoxButton({Key? key}) : super(key: key);

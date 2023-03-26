@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/widgets/image_annotation_view.dart';
-import 'package:tate/widgets/inspector_panel.dart';
-import 'package:tate/widgets/selected_images_grid.dart';
-import 'package:tate/widgets/side_bar.dart';
+import 'package:tate/presentation/widgets/image_annotation_view.dart';
+import 'package:tate/presentation/widgets/inspector_panel.dart';
+import 'package:tate/presentation/widgets/selected_images_grid.dart';
+import 'package:tate/presentation/widgets/side_bar.dart';
 
 class MainPage extends ConsumerWidget {
   const MainPage({super.key});

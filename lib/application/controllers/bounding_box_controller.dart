@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tate/models/bounding_box.dart';
+import 'package:tate/data/models/bounding_box.dart';
 
 part 'bounding_box_controller.g.dart';
 

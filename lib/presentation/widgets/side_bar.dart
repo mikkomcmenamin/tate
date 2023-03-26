@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/controllers/bounding_box_controller.dart';
-import 'package:tate/widgets/draw_bounding_box_button.dart';
+import 'package:tate/application/controllers/bounding_box_controller.dart';
+import 'package:tate/presentation/widgets/draw_bounding_box_button.dart';
 
 import 'annotate_image_button.dart';
 
