@@ -7,7 +7,7 @@ part of 'image_data_controller.dart';
 // **************************************************************************
 
 String _$currentlySelectedImageDataHash() =>
-    r'e5921f7e5de6e552c8bc50895517d760e60ec371';
+    r'efeb6e863d9582521973fa0b5259ab49a20a8c0e';
 
 /// See also [currentlySelectedImageData].
 @ProviderFor(currentlySelectedImageData)
@@ -40,7 +40,7 @@ final isBoundingBoxesDrawnProvider = AutoDisposeProvider<bool>.internal(
 
 typedef IsBoundingBoxesDrawnRef = AutoDisposeProviderRef<bool>;
 String _$imageDataControllerHash() =>
-    r'f0f85d363cb6441b718e927ca9a080cd1ea0f1a5';
+    r'8ac4317880a8d9ca0fffde40e568d1f18209c9e9';
 
 /// See also [ImageDataController].
 @ProviderFor(ImageDataController)

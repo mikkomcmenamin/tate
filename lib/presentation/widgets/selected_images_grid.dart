@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 
 class SelectedImagesGrid extends ConsumerWidget {
@@ -9,8 +10,7 @@ class SelectedImagesGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedImages = ref.watch(imageFileControllerProvider);
-    //final imageData = ref.watch(imageDataControllerProvider);
+    final selectedImages = ref.watch(imageDataControllerProvider);
 
     return SizedBox(
       height: 150,
@@ -20,7 +20,6 @@ class SelectedImagesGrid extends ConsumerWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              //ref.read(selectedImageControllerProvider.notifier).setSelectedImage(imageData[index]);
               ref.read(selectedImageIndexProvider.notifier).setSelectedImageIndex(index);
             },
             child: Container(
@@ -29,7 +28,7 @@ class SelectedImagesGrid extends ConsumerWidget {
               child: AspectRatio(
                 aspectRatio: 1,
                 child: Image.file(
-                  File(selectedImages[index]!.path),
+                  File(selectedImages[index].imageFile.path),
                   fit: BoxFit.cover,
                 ),
               ),

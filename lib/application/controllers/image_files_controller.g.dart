@@ -6,23 +6,6 @@ part of 'image_files_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$imageFileControllerHash() =>
-    r'942d0a9ec9469f5ce2c1a193d44cf19434db283a';
-
-/// See also [ImageFileController].
-@ProviderFor(ImageFileController)
-final imageFileControllerProvider =
-    AutoDisposeNotifierProvider<ImageFileController, List<XFile?>>.internal(
-  ImageFileController.new,
-  name: r'imageFileControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$imageFileControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ImageFileController = AutoDisposeNotifier<List<XFile?>>;
 String _$selectedImageIndexHash() =>
     r'76d3b9109e0a248e4ceb6629368ff6dd19db34ad';
 

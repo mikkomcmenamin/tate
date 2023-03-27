@@ -20,36 +20,30 @@ class ImageDataController extends _$ImageDataController {
   }
 
   void addBoundingBoxToImage({required BoundingBox boundingBox}) {
-    final imageIndex = ref.watch(selectedImageIndexProvider);
+    final imageData = ref.watch(currentlySelectedImageDataProvider);
 
-    if (imageIndex == null) return;
-
-    final imageData = state[imageIndex];
+    if (imageData == null) return;
 
     imageData.boundingBoxes = [...imageData.boundingBoxes, boundingBox];
 
-    final newState = List<ImageData>.from(state);
-    newState[imageIndex] = imageData;
-
-    state = newState;
+    //if state is not called, state doesn't change
   }
 
   void updateBoundingBoxInImage({required Offset endPoint}) {
-    final imageIndex = ref.watch(selectedImageIndexProvider);
-    if (imageIndex == null) return;
+    final imageData = ref.watch(currentlySelectedImageDataProvider);
 
-    final imageData = state[imageIndex];
+    if (imageData == null) return;
 
     final latestBox = imageData.boundingBoxes.last;
     final updatedBox = latestBox.copyWith(endPoint: endPoint);
 
     imageData.boundingBoxes.last = updatedBox;
 
-    final newState = List<ImageData>.from(state);
-
-    newState[imageIndex] = imageData;
-
-    state = newState;
+    // final newState = List<ImageData>.from(state);
+    //
+    // newState[imageIndex] = imageData;
+    //
+    // state = newState;
   }
 
   void clearBoundingBoxes() {
@@ -94,6 +88,9 @@ ImageData? currentlySelectedImageData(CurrentlySelectedImageDataRef ref) {
   final imageIndex = ref.watch(selectedImageIndexProvider);
 
   if (imageIndex == null) return null;
+  print("currentlySelectedImageData. Index $imageIndex");
+
+  if (imageIndex > imageDatas.length) ;
 
   return imageDatas[imageIndex];
 }

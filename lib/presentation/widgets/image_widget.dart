@@ -11,13 +11,13 @@ import 'bounding_box_painter.dart';
 
 class ImageWidget extends HookConsumerWidget {
   final ImageProvider imageProvider;
-  final List<BoundingBox> boundingBoxes;
 
-  const ImageWidget({Key? key, required this.imageProvider, required this.boundingBoxes}) : super(key: key);
+  const ImageWidget({Key? key, required this.imageProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transformationController = useMemoized(() => TransformationController());
+    final boxes = ref.watch(currentlySelectedImageDataProvider)?.boundingBoxes ?? List<BoundingBox>.empty();
 
     final transformation = useState(Matrix4.identity());
 
@@ -42,8 +42,7 @@ class ImageWidget extends HookConsumerWidget {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
             return;
           }
-          final box =
-              BoundingBox(id: boundingBoxes.length, startPoint: event.localPosition, endPoint: event.localPosition);
+          final box = BoundingBox(id: boxes.length, startPoint: event.localPosition, endPoint: event.localPosition);
           ref.read(imageDataControllerProvider.notifier).addBoundingBoxToImage(boundingBox: box);
         },
         onPointerMove: (event) {
@@ -70,7 +69,7 @@ class ImageWidget extends HookConsumerWidget {
               CustomPaint(
                 painter: BoundingBoxPainter(
                   matrix: transformation.value,
-                  boxes: boundingBoxes,
+                  boxes: boxes,
                 ),
               ),
             ],

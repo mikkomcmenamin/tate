@@ -17,7 +17,7 @@ class AnnotateImageButton extends ConsumerWidget {
       onPressed: () async {
         final pickedFiles = await loadImages();
         if (pickedFiles.isNotEmpty) {
-          ref.read(imageFileControllerProvider.notifier).setImageFiles(pickedFiles);
+          //ref.read(imageFileControllerProvider.notifier).setImageFiles(pickedFiles);
 
           for (var file in pickedFiles) {
             ref.read(imageDataControllerProvider.notifier).addImageData(ImageData(imageFile: file!));

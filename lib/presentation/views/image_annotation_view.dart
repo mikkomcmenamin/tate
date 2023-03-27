@@ -14,17 +14,13 @@ class ImageAnnotationView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImage = ref.watch(currentlySelectedImageDataProvider);
-    final imageData = ref.watch(imageDataControllerProvider);
 
     if (selectedImage == null) {
       return const Center(child: Text('No image loaded.'));
     }
 
-    return imageData.isEmpty
-        ? const Center(child: Text('No image loaded.'))
-        : ImageWidget(
-            imageProvider: FileImage(File(selectedImage.imageFile.path)),
-            boundingBoxes: selectedImage.boundingBoxes,
-          );
+    return ImageWidget(
+      imageProvider: FileImage(File(selectedImage.imageFile.path)),
+    );
   }
 }
