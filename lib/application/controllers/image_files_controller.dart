@@ -20,14 +20,12 @@ class ImageFileController extends _$ImageFileController {
 }
 
 @riverpod
-class SelectedImageController extends _$SelectedImageController {
+class SelectedImageIndex extends _$SelectedImageIndex {
   @override
-  XFile? build() {
-    return null;
-  }
+  int? build() => null;
 
-  void setSelectedImage(XFile? image) {
-    state = image;
+  void setSelectedImageIndex(int index) {
+    state = index;
   }
 }
 

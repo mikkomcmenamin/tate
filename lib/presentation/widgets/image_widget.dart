@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/application/controllers/bounding_box_controller.dart';
 import 'package:tate/application/controllers/drawing_mode_controller.dart';
+import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/data/models/bounding_box.dart';
 
@@ -11,8 +11,9 @@ import 'bounding_box_painter.dart';
 
 class ImageWidget extends HookConsumerWidget {
   final ImageProvider imageProvider;
+  final List<BoundingBox> boundingBoxes;
 
-  const ImageWidget({Key? key, required this.imageProvider}) : super(key: key);
+  const ImageWidget({Key? key, required this.imageProvider, required this.boundingBoxes}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,14 +42,15 @@ class ImageWidget extends HookConsumerWidget {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
             return;
           }
-          final box = BoundingBox(startPoint: event.localPosition, endPoint: event.localPosition);
-          ref.read(boundingBoxControllerProvider.notifier).addBox(box);
+          final box =
+              BoundingBox(id: boundingBoxes.length, startPoint: event.localPosition, endPoint: event.localPosition);
+          ref.read(imageDataControllerProvider.notifier).addBoundingBoxToImage(boundingBox: box);
         },
         onPointerMove: (event) {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
             return;
           }
-          ref.read(boundingBoxControllerProvider.notifier).updateCurrentBox(event.localPosition);
+          ref.read(imageDataControllerProvider.notifier).updateBoundingBoxInImage(endPoint: event.localPosition);
         },
         onPointerUp: (event) {},
         child: InteractiveViewer(
@@ -68,7 +70,7 @@ class ImageWidget extends HookConsumerWidget {
               CustomPaint(
                 painter: BoundingBoxPainter(
                   matrix: transformation.value,
-                  boxes: ref.watch(boundingBoxControllerProvider),
+                  boxes: boundingBoxes,
                 ),
               ),
             ],

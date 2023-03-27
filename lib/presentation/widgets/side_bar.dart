@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tate/application/controllers/bounding_box_controller.dart';
+import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/presentation/widgets/draw_bounding_box_button.dart';
 
 import 'annotate_image_button.dart';
@@ -8,7 +8,7 @@ import 'annotate_image_button.dart';
 class SideBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final showClearButton = ref.watch(boundingBoxControllerProvider).isNotEmpty;
+    final showClearButton = ref.watch(isBoundingBoxesDrawnProvider);
 
     return Container(
       width: 50, // Adjust the width to your preference
@@ -28,7 +28,7 @@ class SideBar extends ConsumerWidget {
           if (showClearButton) // Add this condition
             IconButton(
               icon: const Icon(Icons.clear),
-              onPressed: () => ref.read(boundingBoxControllerProvider.notifier).clearBoxes(),
+              onPressed: () => ref.read(imageDataControllerProvider.notifier).clearBoundingBoxes(),
             ),
         ],
       ),

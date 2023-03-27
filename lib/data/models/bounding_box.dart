@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 class BoundingBox {
+  int id;
   Offset startPoint;
   Offset endPoint;
 
   BoundingBox({
+    required this.id,
     required this.startPoint,
     required this.endPoint,
   });
@@ -28,6 +30,7 @@ class BoundingBox {
     Offset? endPoint,
   }) {
     return BoundingBox(
+      id: id,
       startPoint: startPoint ?? this.startPoint,
       endPoint: endPoint ?? this.endPoint,
     );

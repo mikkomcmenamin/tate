@@ -10,6 +10,7 @@ class SelectedImagesGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImages = ref.watch(imageFileControllerProvider);
+    //final imageData = ref.watch(imageDataControllerProvider);
 
     return SizedBox(
       height: 150,
@@ -19,7 +20,8 @@ class SelectedImagesGrid extends ConsumerWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              ref.read(selectedImageControllerProvider.notifier).setSelectedImage(selectedImages[index]);
+              //ref.read(selectedImageControllerProvider.notifier).setSelectedImage(imageData[index]);
+              ref.read(selectedImageIndexProvider.notifier).setSelectedImageIndex(index);
             },
             child: Container(
               height: 150,
