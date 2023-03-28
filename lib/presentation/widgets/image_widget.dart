@@ -23,8 +23,6 @@ class ImageWidget extends HookConsumerWidget {
 
     final transformation = useState(Matrix4.identity());
 
-    print("boxes modified: $boxes");
-
     useEffect(() {
       transformationController.addListener(() {
         transformation.value = transformationController.value;

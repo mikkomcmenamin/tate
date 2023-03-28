@@ -12,8 +12,6 @@ class BoundingBoxPainter extends CustomPainter {
     canvas.save();
     canvas.transform(matrix.storage);
 
-    //final transformedBoxes = boxes.map((box) => box.transform(matrix)).toList();
-
     final paint = Paint()
       ..color = Colors.red
       ..strokeWidth = 2.0
@@ -30,15 +28,6 @@ class BoundingBoxPainter extends CustomPainter {
       );
       canvas.drawRect(rect, paint);
     }
-
-    // for (final box in boxes) {
-    //   final transformedBox = box.transform(matrix);
-    //   canvas.drawRect(transformedBox.rect, paint);
-    // }
-
-    // for (final box in transformedBoxes) {
-    //   canvas.drawRect(box.rect, paint);
-    // }
 
     canvas.restore();
   }
