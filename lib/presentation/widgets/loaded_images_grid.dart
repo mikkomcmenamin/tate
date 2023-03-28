@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
+import 'package:tate/presentation/theme/AppColors.dart';
 
 class LoadedImagesGrid extends ConsumerWidget {
   const LoadedImagesGrid({Key? key}) : super(key: key);
@@ -25,20 +26,24 @@ class LoadedImagesGrid extends ConsumerWidget {
             },
             child: Container(
               height: 150,
-              margin: EdgeInsets.symmetric(horizontal: 2),
+              margin: const EdgeInsets.symmetric(horizontal: 2),
               child: AspectRatio(
                 aspectRatio: 1,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: index == selectedIndex ? Border.all(color: Colors.blue, width: 2.0) : null,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(2.0),
-                    child: Image.file(
+                child: Stack(
+                  children: [
+                    Image.file(
                       File(selectedImages[index].imageFile.path),
                       fit: BoxFit.cover,
                     ),
-                  ),
+                    if (index == selectedIndex)
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.accentPrimary, width: 2.0),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),
