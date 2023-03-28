@@ -19,14 +19,17 @@ class MainScreen extends ConsumerWidget {
       ),
       body: Row(
         children: [
-          SideBar(),
-          Expanded(child: ImageAnnotationView()),
-          InspectorPanel(),
+          Padding(padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8), child: SideBar()),
+          const Expanded(child: ImageAnnotationView()),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+            child: InspectorPanel(),
+          ),
         ],
       ),
       bottomNavigationBar: Container(
         height: 100,
-        child: LoadedImagesGrid(),
+        child: const LoadedImagesGrid(),
       ),
     );
   }
