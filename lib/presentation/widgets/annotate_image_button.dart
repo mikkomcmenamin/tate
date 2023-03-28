@@ -13,6 +13,7 @@ class AnnotateImageButton extends ConsumerWidget {
       icon: const Icon(
         Icons.image,
         size: 30,
+        color: Colors.white,
       ),
       onPressed: () async {
         final pickedFiles = await loadImages();

@@ -11,9 +11,10 @@ class DrawBoundingBoxButton extends ConsumerWidget {
     final bool isSelected = drawingMode == EDrawingMode.boundingBox;
 
     return IconButton(
-      icon: Icon(
+      icon: const Icon(
         Icons.square_outlined,
         size: 30,
+        color: Colors.white,
       ),
       onPressed: () {
         if (!isSelected) {

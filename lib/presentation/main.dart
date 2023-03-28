@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tate/presentation/screens/main_screen.dart';
-
-part 'main.g.dart';
-
-// We create a "provider", which will store a value (here "Hello world").
-// By using a provider, this allows us to mock/override the value exposed.
-@riverpod
-String helloWorld(HelloWorldRef ref) {
-  return 'Hello world';
-}
+import 'package:tate/presentation/theme/theme_data.dart';
 
 void main() {
   runApp(
@@ -31,27 +22,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Focus(child: MainScreen()),
-      theme: ThemeData(
-        fontFamily: 'Inconsolata',
-        primaryColor: Colors.cyan,
-        secondaryHeaderColor: Colors.amber,
-        scaffoldBackgroundColor: Colors.grey.shade900,
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-          titleLarge: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-          bodyMedium: TextStyle(fontSize: 14.0, color: Colors.white),
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.cyan,
-          iconTheme: IconThemeData(color: Colors.white),
-          toolbarTextStyle: TextStyle(color: Colors.white), // Set app bar title text color
-        ),
-        buttonTheme: const ButtonThemeData(
-          buttonColor: Colors.deepPurple, // Set button color
-          textTheme: ButtonTextTheme.primary, // Set button text color
-        ),
-        // Add other customizations as needed
-      ),
+      theme: buildThemeData(),
     );
   }
 }

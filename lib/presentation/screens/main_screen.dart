@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/presentation/views/image_annotation_view.dart';
 import 'package:tate/presentation/widgets/inspector_panel.dart';
-import 'package:tate/presentation/widgets/selected_images_grid.dart';
+import 'package:tate/presentation/widgets/loaded_images_grid.dart';
 import 'package:tate/presentation/widgets/side_bar.dart';
 
 class MainScreen extends ConsumerWidget {
@@ -25,8 +25,8 @@ class MainScreen extends ConsumerWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 150,
-        child: SelectedImagesGrid(),
+        height: 100,
+        child: LoadedImagesGrid(),
       ),
     );
   }

@@ -5,12 +5,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 
-class SelectedImagesGrid extends ConsumerWidget {
-  const SelectedImagesGrid({Key? key}) : super(key: key);
+class LoadedImagesGrid extends ConsumerWidget {
+  const LoadedImagesGrid({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImages = ref.watch(imageDataControllerProvider);
+    final selectedIndex = ref.watch(selectedImageIndexProvider);
 
     return SizedBox(
       height: 150,
@@ -27,9 +28,17 @@ class SelectedImagesGrid extends ConsumerWidget {
               margin: EdgeInsets.symmetric(horizontal: 2),
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Image.file(
-                  File(selectedImages[index].imageFile.path),
-                  fit: BoxFit.cover,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: index == selectedIndex ? Border.all(color: Colors.blue, width: 2.0) : null,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(2.0),
+                    child: Image.file(
+                      File(selectedImages[index].imageFile.path),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
             ),

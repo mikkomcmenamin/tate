@@ -48,9 +48,51 @@ Before you can run the project, make sure you have the following installed:
 
 `flutter run -d macos`
 
+# Riverpod 
 When developing, use riverpod generator:
 
 `flutter pub run build_runner watch -d`
+
+It is also recommended to install "Riverpod snippets" plugin
+
+When a stateful provider is needed, use the following syntax. This will create automatically an "exampleStateProvider". Remember to write the part syntax to the top of the file. 
+
+```
+part 'example_controller.g.dart'
+
+@riverpod
+class ExampleState extends _$ExampleState {
+  @override
+  String build() => "Hello World"; 
+
+  void setExampleState(String newString) {
+    state = newString;
+  }
+}
+```
+
+You can watch the value like so. If the value changes, the widget is automatically rebuilt. 
+```
+final exampleStateValue = ref.watch(exampleStateProvider);  //"Hello World" 
+```
+
+You can modify the state like so. Notice the "notifier".  
+```
+ref.read(exampleStateProvider.notifier).state = "Hevosen kalleudet";
+```
+
+If you don't need to modify state, you can use a stateless provider using the following syntax. You can chain together and combine multiple 
+providers like this. "Watch" the provider value in the same way you do with the stateful provider. 
+```
+@riverpod
+bool isTheSunHot(IsTheSunHotRef ref) {
+  final temperature = ref.watch(sunTemperatureProvider);
+
+  if (temperature > 1000000.0) return true;
+
+  return false;
+}
+```
 
 # Architecture Overview
 

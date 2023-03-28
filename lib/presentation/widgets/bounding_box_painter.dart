@@ -29,6 +29,15 @@ class BoundingBoxPainter extends CustomPainter {
       canvas.drawRect(rect, paint);
     }
 
+    // for (final box in boxes) {
+    //   final transformedBox = box.transform(matrix);
+    //   canvas.drawRect(transformedBox.rect, paint);
+    // }
+
+    // for (final box in transformedBoxes) {
+    //   canvas.drawRect(box.rect, paint);
+    // }
+
     canvas.restore();
   }
 
