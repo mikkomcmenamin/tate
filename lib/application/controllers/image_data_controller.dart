@@ -19,35 +19,37 @@ class ImageDataController extends _$ImageDataController {
     state = [...state, imageData];
   }
 
-  void addBoundingBoxToImage({required BoundingBox boundingBox}) {
-    final imageData = ref.watch(currentlySelectedImageDataProvider);
+  void addBoundingBoxToImage({required int? imageIndex, required BoundingBox boundingBox}) {
+    if (imageIndex == null) return;
 
-    if (imageData == null) return;
+    final imageData = state[imageIndex];
 
     imageData.boundingBoxes = [...imageData.boundingBoxes, boundingBox];
 
-    //if state is not called, state doesn't change
+    final newState = List<ImageData>.from(state);
+    newState[imageIndex] = imageData;
+
+    state = newState;
   }
 
-  void updateBoundingBoxInImage({required Offset endPoint}) {
-    final imageData = ref.watch(currentlySelectedImageDataProvider);
+  void updateBoundingBoxInImage({required int? imageIndex, required Offset endPoint}) {
+    if (imageIndex == null) return;
 
-    if (imageData == null) return;
+    final imageData = state[imageIndex];
 
     final latestBox = imageData.boundingBoxes.last;
     final updatedBox = latestBox.copyWith(endPoint: endPoint);
 
     imageData.boundingBoxes.last = updatedBox;
 
-    // final newState = List<ImageData>.from(state);
-    //
-    // newState[imageIndex] = imageData;
-    //
-    // state = newState;
+    final newState = List<ImageData>.from(state);
+
+    newState[imageIndex] = imageData;
+
+    state = newState;
   }
 
-  void clearBoundingBoxes() {
-    final imageIndex = ref.watch(selectedImageIndexProvider);
+  void clearBoundingBoxes({required int? imageIndex}) {
     if (imageIndex == null) return;
 
     final imageData = state[imageIndex];
@@ -60,26 +62,6 @@ class ImageDataController extends _$ImageDataController {
 
     state = newState;
   }
-
-  // //TODO take this into use
-  // void updateBoundingBoxes(int imageIndex, BoundingBox newBox, BoundingBoxUpdateAction action) {
-  //   final imageData = state[imageIndex];
-  //   switch (action) {
-  //     case BoundingBoxUpdateAction.add:
-  //       imageData.boundingBoxes.add(newBox);
-  //       break;
-  //     case BoundingBoxUpdateAction.update:
-  //       final index = imageData.boundingBoxes.indexWhere((box) => box.id == newBox.id);
-  //       if (index != -1) {
-  //         imageData.boundingBoxes[index] = newBox;
-  //       }
-  //       break;
-  //     case BoundingBoxUpdateAction.remove:
-  //       imageData.boundingBoxes.removeWhere((box) => box.id == newBox.id);
-  //       break;
-  //   }
-  //   state = [...state];
-  // }
 }
 
 @riverpod
@@ -88,11 +70,21 @@ ImageData? currentlySelectedImageData(CurrentlySelectedImageDataRef ref) {
   final imageIndex = ref.watch(selectedImageIndexProvider);
 
   if (imageIndex == null) return null;
-  print("currentlySelectedImageData. Index $imageIndex");
 
-  if (imageIndex > imageDatas.length) ;
+  if (imageIndex > imageDatas.length) return imageDatas[imageDatas.length - 0];
 
   return imageDatas[imageIndex];
+}
+
+@riverpod
+List<BoundingBox> boundingBoxesOfSelectedImage(BoundingBoxesOfSelectedImageRef ref) {
+  final imageDatas = ref.watch(imageDataControllerProvider);
+  final imageIndex = ref.watch(selectedImageIndexProvider);
+
+  if (imageIndex == null || imageIndex > imageDatas.length) return [];
+
+  //this triggers the provider. not sure if there is a better way.
+  return List<BoundingBox>.from(imageDatas[imageIndex].boundingBoxes);
 }
 
 @riverpod

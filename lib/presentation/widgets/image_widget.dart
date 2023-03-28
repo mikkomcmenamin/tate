@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/drawing_mode_controller.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
+import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/data/models/bounding_box.dart';
 
@@ -17,9 +18,12 @@ class ImageWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transformationController = useMemoized(() => TransformationController());
-    final boxes = ref.watch(currentlySelectedImageDataProvider)?.boundingBoxes ?? List<BoundingBox>.empty();
+    final boxes = ref.watch(boundingBoxesOfSelectedImageProvider);
+    final imageIndex = ref.watch(selectedImageIndexProvider);
 
     final transformation = useState(Matrix4.identity());
+
+    print("boxes modified: $boxes");
 
     useEffect(() {
       transformationController.addListener(() {
@@ -43,13 +47,17 @@ class ImageWidget extends HookConsumerWidget {
             return;
           }
           final box = BoundingBox(id: boxes.length, startPoint: event.localPosition, endPoint: event.localPosition);
-          ref.read(imageDataControllerProvider.notifier).addBoundingBoxToImage(boundingBox: box);
+          ref
+              .read(imageDataControllerProvider.notifier)
+              .addBoundingBoxToImage(imageIndex: imageIndex, boundingBox: box);
         },
         onPointerMove: (event) {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
             return;
           }
-          ref.read(imageDataControllerProvider.notifier).updateBoundingBoxInImage(endPoint: event.localPosition);
+          ref
+              .read(imageDataControllerProvider.notifier)
+              .updateBoundingBoxInImage(imageIndex: imageIndex, endPoint: event.localPosition);
         },
         onPointerUp: (event) {},
         child: InteractiveViewer(

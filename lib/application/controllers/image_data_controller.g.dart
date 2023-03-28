@@ -7,7 +7,7 @@ part of 'image_data_controller.dart';
 // **************************************************************************
 
 String _$currentlySelectedImageDataHash() =>
-    r'efeb6e863d9582521973fa0b5259ab49a20a8c0e';
+    r'fc5659edb48ae170150b190294a584be944f1ba8';
 
 /// See also [currentlySelectedImageData].
 @ProviderFor(currentlySelectedImageData)
@@ -23,6 +23,24 @@ final currentlySelectedImageDataProvider =
 );
 
 typedef CurrentlySelectedImageDataRef = AutoDisposeProviderRef<ImageData?>;
+String _$boundingBoxesOfSelectedImageHash() =>
+    r'b203922aebc7985206e092fd8fe9e06c9536908d';
+
+/// See also [boundingBoxesOfSelectedImage].
+@ProviderFor(boundingBoxesOfSelectedImage)
+final boundingBoxesOfSelectedImageProvider =
+    AutoDisposeProvider<List<BoundingBox>>.internal(
+  boundingBoxesOfSelectedImage,
+  name: r'boundingBoxesOfSelectedImageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$boundingBoxesOfSelectedImageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef BoundingBoxesOfSelectedImageRef
+    = AutoDisposeProviderRef<List<BoundingBox>>;
 String _$isBoundingBoxesDrawnHash() =>
     r'ee6b6874924cbf86f9139c45302dd88dacba603a';
 
@@ -40,7 +58,7 @@ final isBoundingBoxesDrawnProvider = AutoDisposeProvider<bool>.internal(
 
 typedef IsBoundingBoxesDrawnRef = AutoDisposeProviderRef<bool>;
 String _$imageDataControllerHash() =>
-    r'8ac4317880a8d9ca0fffde40e568d1f18209c9e9';
+    r'eff0341a210b7321e35f265484f2c08f8ff86ef9';
 
 /// See also [ImageDataController].
 @ProviderFor(ImageDataController)
