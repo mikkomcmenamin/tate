@@ -16,7 +16,6 @@ Tate is currently tested on macOS, but support for web, Windows, and Linux platf
 ## Todo:
 
 - Manage bounding boxes (add, update, remove)
-- Tie annotations to specific images
 - Classify annotations
 - Different annotation tools (polygon drawing, 3d bounding box..)
 - Export dataset (images + annotations information as text)
@@ -48,14 +47,15 @@ Before you can run the project, make sure you have the following installed:
 
 `flutter run -d macos`
 
-# Riverpod 
+# Riverpod
+
 When developing, use riverpod generator:
 
 `flutter pub run build_runner watch -d`
 
 It is also recommended to install "Riverpod snippets" plugin
 
-When a stateful provider is needed, use the following syntax. This will create automatically an "exampleStateProvider". Remember to write the part syntax to the top of the file. 
+When a stateful provider is needed, use the following syntax. This will create automatically an "exampleStateProvider". Remember to write the part syntax to the top of the file.
 
 ```
 part 'example_controller.g.dart'
@@ -63,7 +63,7 @@ part 'example_controller.g.dart'
 @riverpod
 class ExampleState extends _$ExampleState {
   @override
-  String build() => "Hello World"; 
+  String build() => "Hello World";
 
   void setExampleState(String newString) {
     state = newString;
@@ -71,18 +71,21 @@ class ExampleState extends _$ExampleState {
 }
 ```
 
-You can watch the value like so. If the value changes, the widget is automatically rebuilt. 
+You can watch the value like so. If the value changes, the widget is automatically rebuilt.
+
 ```
-final exampleStateValue = ref.watch(exampleStateProvider);  //"Hello World" 
+final exampleStateValue = ref.watch(exampleStateProvider);  //"Hello World"
 ```
 
-You can modify the state like so. Notice the "notifier".  
+You can modify the state like so. Notice the "notifier".
+
 ```
 ref.read(exampleStateProvider.notifier).state = "Hevosen kalleudet";
 ```
 
-If you don't need to modify state, you can use a stateless provider using the following syntax. You can chain together and combine multiple 
-providers like this. "Watch" the provider value in the same way you do with the stateful provider. 
+If you don't need to modify state, you can use a stateless provider using the following syntax. You can chain together and combine multiple
+providers like this. "Watch" the provider value in the same way you do with the stateful provider.
+
 ```
 @riverpod
 bool isTheSunHot(IsTheSunHotRef ref) {
