@@ -4,12 +4,9 @@ class BoundingBox {
   int id;
   Offset startPoint;
   Offset endPoint;
+  final String label;
 
-  BoundingBox({
-    required this.id,
-    required this.startPoint,
-    required this.endPoint,
-  });
+  BoundingBox({required this.id, required this.startPoint, required this.endPoint, this.label = "label"});
 
   // Rect get rect => Rect.fromPoints(startPoint, endPoint);
   //

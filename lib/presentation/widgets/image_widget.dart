@@ -7,8 +7,9 @@ import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/data/models/bounding_box.dart';
+import 'package:tate/presentation/widgets/painters/label_painter.dart';
 
-import 'bounding_box_painter.dart';
+import 'painters/bounding_box_painter.dart';
 
 class ImageWidget extends HookConsumerWidget {
   final ImageProvider imageProvider;
@@ -74,6 +75,13 @@ class ImageWidget extends HookConsumerWidget {
               ),
               CustomPaint(
                 painter: BoundingBoxPainter(
+                  matrix: transformation.value,
+                  boxes: boxes,
+                ),
+              ),
+              CustomPaint(
+                // Add this new CustomPaint for labels
+                painter: LabelPainter(
                   matrix: transformation.value,
                   boxes: boxes,
                 ),
