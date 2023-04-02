@@ -120,3 +120,5 @@ https://github.com/rrousselGit/riverpod/tree/master/packages/riverpod_lint#all-a
 https://docs-v2.riverpod.dev
 
 https://codewithandrea.com/articles/flutter-riverpod-generator/
+
+https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo

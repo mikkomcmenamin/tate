@@ -1,42 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:tate/data/models/bounding_box.dart';
+import 'package:tate/presentation/theme/AppColors.dart';
 
 class LabelPainter extends CustomPainter {
-  LabelPainter({required this.matrix, required this.boxes});
+  LabelPainter({required this.matrix, required this.hoveredBox});
 
   final Matrix4 matrix;
-  final List<BoundingBox> boxes;
-
-  final _textPaint = Paint()
-    ..color = Colors.white
-    ..style = PaintingStyle.fill;
-
-  final _textPainter = TextPainter(
-    textDirection: TextDirection.ltr,
-  );
+  final BoundingBox? hoveredBox;
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (final box in boxes) {
-      final startPoint = box.startPoint;
-      final endPoint = box.endPoint;
-      final rect = Rect.fromLTRB(
-        startPoint.dx,
-        startPoint.dy,
-        endPoint.dx,
-        endPoint.dy,
-      );
+    if (hoveredBox == null) return;
 
-      final offSet = Offset(rect.left, rect.top - 20);
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: hoveredBox!.label ?? 'No label',
+        style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
+      ),
+      textDirection: TextDirection.ltr,
+    );
 
-      _textPainter.text = TextSpan(text: box.label, style: TextStyle(color: _textPaint.color));
-      _textPainter.layout();
-      _textPainter.paint(canvas, offSet);
-    }
+    final startPoint = hoveredBox!.startPoint;
+    final endPoint = hoveredBox!.endPoint;
+    final rect = Rect.fromLTRB(
+      startPoint.dx,
+      startPoint.dy,
+      endPoint.dx,
+      endPoint.dy,
+    );
+    final labelPosition = Offset(rect.left, rect.top - 20);
+
+    canvas.save();
+    canvas.transform(matrix.storage);
+
+    textPainter.layout();
+    textPainter.paint(canvas, labelPosition);
+
+    canvas.restore();
   }
 
   @override
   bool shouldRepaint(covariant LabelPainter oldDelegate) {
-    return oldDelegate.boxes != boxes || oldDelegate.matrix != matrix;
+    return oldDelegate.hoveredBox != hoveredBox || oldDelegate.matrix != matrix;
   }
 }

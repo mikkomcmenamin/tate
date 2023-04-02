@@ -6,15 +6,16 @@ import 'package:tate/application/controllers/drawing_mode_controller.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
+import 'package:tate/application/utils/math_utils.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
 
 import 'painters/bounding_box_painter.dart';
 
 class ImageWidget extends HookConsumerWidget {
-  final ImageProvider imageProvider;
-
   const ImageWidget({Key? key, required this.imageProvider}) : super(key: key);
+
+  final ImageProvider imageProvider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,6 +24,7 @@ class ImageWidget extends HookConsumerWidget {
     final imageIndex = ref.watch(selectedImageIndexProvider);
 
     final transformation = useState(Matrix4.identity());
+    final hoveredBox = useState<BoundingBox?>(null);
 
     useEffect(() {
       transformationController.addListener(() {
@@ -37,7 +39,9 @@ class ImageWidget extends HookConsumerWidget {
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onHover: (event) {},
+      onHover: (event) {
+        _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition, hoveredBox);
+      },
       onEnter: (event) {},
       onExit: (event) {},
       child: Listener(
@@ -83,7 +87,7 @@ class ImageWidget extends HookConsumerWidget {
                 // Add this new CustomPaint for labels
                 painter: LabelPainter(
                   matrix: transformation.value,
-                  boxes: boxes,
+                  hoveredBox: hoveredBox.value,
                 ),
               ),
             ],
@@ -91,5 +95,29 @@ class ImageWidget extends HookConsumerWidget {
         ),
       ),
     );
+  }
+
+  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref, Matrix4 matrix, Offset localPosition,
+      ValueNotifier<BoundingBox?> hoveredBox) {
+    final boxes = ref.read(boundingBoxesOfSelectedImageProvider);
+    final inverseMatrix = Matrix4.inverted(matrix);
+    final transformedPosition = applyInverseMatrix(inverseMatrix, localPosition);
+
+    BoundingBox? foundBox;
+    for (final box in boxes.reversed) {
+      final rect = Rect.fromLTRB(
+        box.startPoint.dx - 10,
+        box.startPoint.dy - 10,
+        box.endPoint.dx + 10,
+        box.endPoint.dy + 10,
+      );
+
+      if (rect.contains(transformedPosition)) {
+        foundBox = box;
+        break;
+      }
+    }
+
+    hoveredBox.value = foundBox;
   }
 }
