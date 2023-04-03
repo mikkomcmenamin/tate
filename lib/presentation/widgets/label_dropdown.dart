@@ -4,6 +4,7 @@ import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/project_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
+import 'package:tate/presentation/theme/reusable_widgets.dart';
 
 class LabelDropdown extends ConsumerWidget {
   const LabelDropdown({Key? key}) : super(key: key);
@@ -15,27 +16,29 @@ class LabelDropdown extends ConsumerWidget {
 
     return box == null
         ? const SizedBox.shrink()
-        : PopupMenuButton<String>(
-            tooltip: "Select label",
-            onSelected: (String value) {
-              // Update the bounding box with the selected label
-              ref.read(imageDataControllerProvider.notifier).setLabelForBoundingBox(
-                  imageId: ref.watch(selectedImageIndexProvider), boundingBoxId: box.id, label: value);
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                ...project.labels.map<PopupMenuItem<String>>(
-                  (String label) => PopupMenuItem<String>(
-                    value: label,
-                    child: Text(label),
+        : Theme(
+            data: Theme.of(context).copyWith(popupMenuTheme: tateFramePopupMenuTheme(context)),
+            child: PopupMenuButton<String>(
+              tooltip: "Select label",
+              onSelected: (String value) {
+                // Update the bounding box with the selected label
+                ref.read(imageDataControllerProvider.notifier).setLabelForBoundingBox(
+                    imageId: ref.watch(selectedImageIndexProvider), boundingBoxId: box.id, label: value);
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  ...project.labels.map<PopupMenuItem<String>>(
+                    (String label) => PopupMenuItem<String>(
+                      value: label,
+                      child: Text(label),
+                    ),
                   ),
-                ),
-                const PopupMenuItem<String>(
-                  value: "AddNewLabel",
-                  child: Text("Add new label"),
-                ),
-              ];
-            },
-          );
+                  const PopupMenuItem<String>(
+                    value: "AddNewLabel",
+                    child: Text("Add new label"),
+                  ),
+                ];
+              },
+            ));
   }
 }

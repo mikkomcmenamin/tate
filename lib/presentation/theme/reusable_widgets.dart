@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tate/presentation/theme/AppColors.dart';
 
 class TateFrame extends StatelessWidget {
   final Widget child;
@@ -24,4 +25,18 @@ class TateFrame extends StatelessWidget {
       child: child,
     );
   }
+}
+
+PopupMenuThemeData tateFramePopupMenuTheme(BuildContext context) {
+  return PopupMenuThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10), // Adjust the border radius
+      side: BorderSide(
+        color: Colors.white.withOpacity(0.2), // Adjust the border color
+        width: 1, // Adjust the border width
+      ),
+    ),
+    color: const Color.fromRGBO(9, 12, 14, 1).withOpacity(0.8), // Adjust the background color
+    textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.textPrimary), // Adjust the text color
+  );
 }
