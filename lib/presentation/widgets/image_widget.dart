@@ -6,8 +6,10 @@ import 'package:tate/application/controllers/drawing_mode_controller.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
+import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/application/utils/math_utils.dart';
 import 'package:tate/data/models/bounding_box.dart';
+import 'package:tate/presentation/widgets/label_dropdown.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
 
 import 'painters/bounding_box_painter.dart';
@@ -24,7 +26,7 @@ class ImageWidget extends HookConsumerWidget {
     final imageIndex = ref.watch(selectedImageIndexProvider);
 
     final transformation = useState(Matrix4.identity());
-    final hoveredBox = useState<BoundingBox?>(null);
+    final hoveredBox = ref.watch(hoveredBoxProvider);
 
     useEffect(() {
       transformationController.addListener(() {
@@ -40,13 +42,13 @@ class ImageWidget extends HookConsumerWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onHover: (event) {
-        _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition, hoveredBox);
+        _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition);
       },
       onEnter: (event) {},
       onExit: (event) {},
       child: Listener(
         onPointerDown: (event) {
-          if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
+          if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
             return;
           }
           final box = BoundingBox(id: boxes.length, startPoint: event.localPosition, endPoint: event.localPosition);
@@ -55,7 +57,7 @@ class ImageWidget extends HookConsumerWidget {
               .addBoundingBoxToImage(imageIndex: imageIndex, boundingBox: box);
         },
         onPointerMove: (event) {
-          if (event.buttons == kSecondaryMouseButton || panEnabled.value) {
+          if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
             return;
           }
           ref
@@ -87,9 +89,15 @@ class ImageWidget extends HookConsumerWidget {
                 // Add this new CustomPaint for labels
                 painter: LabelPainter(
                   matrix: transformation.value,
-                  hoveredBox: hoveredBox.value,
+                  hoveredBox: hoveredBox,
                 ),
               ),
+              if (hoveredBox != null)
+                Positioned(
+                  left: hoveredBox.startPoint.dx,
+                  top: hoveredBox.startPoint.dy,
+                  child: LabelDropdown(),
+                ),
             ],
           ),
         ),
@@ -97,13 +105,13 @@ class ImageWidget extends HookConsumerWidget {
     );
   }
 
-  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref, Matrix4 matrix, Offset localPosition,
-      ValueNotifier<BoundingBox?> hoveredBox) {
+  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref, Matrix4 matrix, Offset localPosition) {
     final boxes = ref.read(boundingBoxesOfSelectedImageProvider);
     final inverseMatrix = Matrix4.inverted(matrix);
     final transformedPosition = applyInverseMatrix(inverseMatrix, localPosition);
 
     BoundingBox? foundBox;
+
     for (final box in boxes.reversed) {
       final rect = Rect.fromLTRB(
         box.startPoint.dx - 10,
@@ -118,6 +126,6 @@ class ImageWidget extends HookConsumerWidget {
       }
     }
 
-    hoveredBox.value = foundBox;
+    ref.read(hoveredBoxProvider.notifier).state = foundBox;
   }
 }

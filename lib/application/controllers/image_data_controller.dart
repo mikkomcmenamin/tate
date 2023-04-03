@@ -62,6 +62,26 @@ class ImageDataController extends _$ImageDataController {
 
     state = newState;
   }
+
+  void setLabelForBoundingBox({required int? imageId, required int boundingBoxId, required String label}) {
+    if (imageId == null) return;
+
+    final imageData = state[imageId];
+
+    final boxIndex = imageData.boundingBoxes.indexWhere((element) => element.id == boundingBoxId);
+
+    if (boxIndex == -1) return;
+
+    final updatedBox = imageData.boundingBoxes[boxIndex].copyWith(label: label);
+
+    imageData.boundingBoxes[boxIndex] = updatedBox;
+
+    final newState = List<ImageData>.from(state);
+
+    newState[imageId] = imageData;
+
+    state = newState;
+  }
 }
 
 @riverpod

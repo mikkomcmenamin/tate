@@ -25,11 +25,13 @@ class BoundingBox {
   BoundingBox copyWith({
     Offset? startPoint,
     Offset? endPoint,
+    String? label,
   }) {
     return BoundingBox(
       id: id,
       startPoint: startPoint ?? this.startPoint,
       endPoint: endPoint ?? this.endPoint,
+      label: label ?? this.label,
     );
   }
 }
