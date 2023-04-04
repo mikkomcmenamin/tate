@@ -3,7 +3,7 @@ import 'package:tate/data/models/project.dart';
 
 part 'project_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ProjectController extends _$ProjectController {
   @override
   Project build() {
@@ -12,6 +12,9 @@ class ProjectController extends _$ProjectController {
 
   void addLabel(String label) {
     state = state.copyWith(labels: [...state.labels, label]);
+    state.labels.forEach((element) {
+      print(element);
+    });
   }
 
   void removeLabel(String label) {

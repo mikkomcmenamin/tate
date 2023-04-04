@@ -97,6 +97,24 @@ bool isTheSunHot(IsTheSunHotRef ref) {
 }
 ```
 
+Sometimes you want to show a one-time alert dialog if a provider state changes.
+Use ref.listen() in the build method:
+
+```
+ref.listen<StateController<String>>(exampleStateProvider.state, (previous, current) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('${current.state}')),
+  );
+});
+```
+
+by default, the keepAlive is OFF by default, so if a widget that uses a provider gets removed from the tree, 
+the provider will be disposed. To prevent this from happening, you can use the following syntax.
+
+```
+@Riverpod(keepAlive: true)
+```
+
 # Architecture Overview
 
 Tate's architecture emphasizes separation of concerns and maintainability through three main layers: Data, Application, and Presentation.

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/project_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
+import 'package:tate/presentation/theme/AppColors.dart';
 import 'package:tate/presentation/theme/reusable_widgets.dart';
 
-class LabelDropdown extends ConsumerWidget {
+class LabelDropdown extends HookConsumerWidget {
   const LabelDropdown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final newLabelController = useTextEditingController();
     final box = ref.watch(hoveredBoxProvider);
     final project = ref.watch(projectControllerProvider);
 
@@ -21,9 +24,13 @@ class LabelDropdown extends ConsumerWidget {
             child: PopupMenuButton<String>(
               tooltip: "Select label",
               onSelected: (String value) {
-                // Update the bounding box with the selected label
-                ref.read(imageDataControllerProvider.notifier).setLabelForBoundingBox(
-                    imageId: ref.watch(selectedImageIndexProvider), boundingBoxId: box.id, label: value);
+                if (value == "AddNewLabel") {
+                  return;
+                } else {
+                  // Update the bounding box with the selected label
+                  ref.read(imageDataControllerProvider.notifier).setLabelForBoundingBox(
+                      imageId: ref.watch(selectedImageIndexProvider), boundingBoxId: box.id, label: value);
+                }
               },
               itemBuilder: (BuildContext context) {
                 return [
@@ -33,9 +40,25 @@ class LabelDropdown extends ConsumerWidget {
                       child: Text(label),
                     ),
                   ),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: "AddNewLabel",
-                    child: Text("Add new label"),
+                    child: TextField(
+                        style: const TextStyle(color: AppColors.textPrimary),
+                        controller: newLabelController,
+                        cursorColor: AppColors.accentPrimary,
+                        decoration: const InputDecoration(
+                          hintText: "Add new label",
+                          hintStyle: TextStyle(color: AppColors.textPrimary),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColors.accentPrimary), // Set the underline color when focused
+                          ),
+                        ),
+                        onSubmitted: (value) {
+                          if (value.isNotEmpty) {
+                            ref.read(projectControllerProvider.notifier).addLabel(value);
+                          }
+                        }),
                   ),
                 ];
               },
