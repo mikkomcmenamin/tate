@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "project_name": "project1",
+    "size": 2,
+    "date": "2023-04-07T12:34:56.789"
+  },
+  "labels": [
+    {
+      "name": "person"
+    },
+    {
+      "name": "car"
+    },
+    {
+      "name": "cat"
+    }
+  ],
+  "images": [
+    {
+      "image_id": 0,
+      "name": "image1.jpg",
+      "width": 1920,
+      "height": 1080,
+      "annotations": [
+        {
+          "type": "rectangle",
+          "label_id": 0,
+          "points": [500, 400, 800, 600]
+        },
+        {
+          "type": "rectangle",
+          "label_id": 1,
+          "points": [100, 200, 400, 300]
+        }
+      ]
+    },
+    {
+      "image_id": 1,
+      "name": "image2.jpg",
+      "width": 1920,
+      "height": 1080,
+      "annotations": [
+        {
+          "type": "rectangle",
+          "label_id": 2,
+          "points": [600, 500, 900, 700]
+        }
+      ]
+    }
+  ]
+}
