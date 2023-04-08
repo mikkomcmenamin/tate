@@ -31,9 +31,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker:
-  file_selector:
-  file_selector_macos:
   freezed_annotation:
   freezed:
   flutter_svg:

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
@@ -20,7 +18,7 @@ class ImageAnnotationView extends ConsumerWidget {
     }
 
     return ImageWidget(
-      imageProvider: FileImage(File(selectedImage.imageFile.path)),
+      imageProvider: FileImage(selectedImage.imageFile),
     );
   }
 }

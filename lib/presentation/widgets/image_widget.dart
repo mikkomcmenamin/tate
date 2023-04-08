@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/drawing_mode_controller.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
-import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/application/utils/math_utils.dart';

@@ -1,13 +1,14 @@
-import 'package:file_selector/file_selector.dart';
+import 'dart:io';
+
 import 'package:tate/data/models/bounding_box.dart';
 
 class ImageData {
-  final XFile imageFile;
+  final File imageFile;
   List<BoundingBox> boundingBoxes;
 
   ImageData({required this.imageFile, List<BoundingBox>? boundingBoxes}) : boundingBoxes = boundingBoxes ?? [];
 
-  ImageData copyWith({XFile? imageFile, List<BoundingBox>? boundingBoxes}) {
+  ImageData copyWith({File? imageFile, List<BoundingBox>? boundingBoxes}) {
     return ImageData(imageFile: imageFile ?? this.imageFile, boundingBoxes: boundingBoxes ?? this.boundingBoxes);
   }
 }

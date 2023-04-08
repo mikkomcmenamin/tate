@@ -36,7 +36,7 @@ void exportProject(ExportProjectRef ref) async {
 
     return ImageExport(
       imageId: 0, // TODO: add image id
-      name: imageData.imageFile.name,
+      name: imageData.imageFile.path.split('/').last,
       width: size.width,
       height: size.height,
       annotations: annotations,

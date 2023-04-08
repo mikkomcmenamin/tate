@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
-import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/application/controllers/project_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/presentation/theme/AppColors.dart';

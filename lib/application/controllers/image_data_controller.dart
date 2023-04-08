@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/data/models/image_data.dart';
 
@@ -114,4 +113,14 @@ bool isBoundingBoxesDrawn(IsBoundingBoxesDrawnRef ref) {
   if (currentImage == null) return false;
 
   return currentImage.boundingBoxes.isNotEmpty;
+}
+
+@riverpod
+class SelectedImageIndex extends _$SelectedImageIndex {
+  @override
+  int? build() => null;
+
+  void setSelectedImageIndex(int index) {
+    state = index;
+  }
 }

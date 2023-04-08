@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
-import 'package:tate/application/controllers/image_files_controller.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
 
 class LoadedImagesGrid extends ConsumerWidget {
