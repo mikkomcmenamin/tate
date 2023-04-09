@@ -44,7 +44,9 @@ class ImageWidget extends HookConsumerWidget {
         _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition);
       },
       onEnter: (event) {},
-      onExit: (event) {},
+      onExit: (event) {
+        ref.read(mousePositionProvider.notifier).updateMousePosition(null);
+      },
       child: Listener(
         onPointerDown: (event) {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
@@ -56,6 +58,7 @@ class ImageWidget extends HookConsumerWidget {
               .addBoundingBoxToImage(imageIndex: imageIndex, boundingBox: box);
         },
         onPointerMove: (event) {
+          ref.read(mousePositionProvider.notifier).updateMousePosition(event.localPosition);
           if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
             return;
           }

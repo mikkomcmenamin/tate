@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:image_size_getter/file_input.dart';
-import 'package:image_size_getter/image_size_getter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/project_controller.dart';
@@ -31,14 +29,11 @@ void exportProject(ExportProjectRef ref) async {
       );
     }).toList();
 
-    final file = File(imageData.imageFile.path);
-    final size = ImageSizeGetter.getSize(FileInput(file));
-
     return ImageExport(
       imageId: 0, // TODO: add image id
       name: imageData.imageFile.path.split('/').last,
-      width: size.width,
-      height: size.height,
+      width: imageData.width,
+      height: imageData.height,
       annotations: annotations,
     );
   }).toList();
