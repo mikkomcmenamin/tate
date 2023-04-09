@@ -72,15 +72,15 @@ class ImageWidget extends HookConsumerWidget {
           panEnabled: panEnabled.value,
           scaleEnabled: true,
           boundaryMargin: const EdgeInsets.all(2),
-          minScale: 0.1,
-          maxScale: 10.0,
+          minScale: 1,
+          maxScale: 1,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              FittedBox(
-                fit: BoxFit.contain,
-                child: Image(image: imageProvider),
+              Container(
+                color: Colors.blue[100],
               ),
+              FittedBox(fit: BoxFit.contain, alignment: Alignment.topLeft, child: Image(image: imageProvider)), //
               CustomPaint(
                 painter: BoundingBoxPainter(
                   matrix: transformation.value,
