@@ -18,7 +18,7 @@ class ImageAnnotationView extends ConsumerWidget {
     }
 
     return ImageWidget(
-      imageProvider: FileImage(selectedImage.imageFile),
+      imageData: selectedImage,
     );
   }
 }

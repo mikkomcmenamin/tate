@@ -1,18 +1,19 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:tate/data/models/image_data.dart';
 
 class ScaledImage extends StatelessWidget {
-  final double imageWidth;
-  final double imageHeight;
-  final ImageProvider imageProvider;
+  final int imageWidth;
+  final int imageHeight;
+  final ImageData imageData;
   final void Function(double scaleFactor) onScale;
 
   ScaledImage({
     Key? key,
     required this.imageWidth,
     required this.imageHeight,
-    required this.imageProvider,
+    required this.imageData,
     required this.onScale,
   }) : super(key: key);
 
@@ -37,7 +38,7 @@ class ScaledImage extends StatelessWidget {
         width: imageSize.width,
         height: imageSize.height,
         child: Image(
-          image: imageProvider,
+          image: FileImage(imageData.imageFile),
           fit: BoxFit.contain,
           alignment: Alignment.topLeft,
         ),

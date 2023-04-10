@@ -8,6 +8,7 @@ import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/application/utils/math_utils.dart';
 import 'package:tate/data/models/bounding_box.dart';
+import 'package:tate/data/models/image_data.dart';
 import 'package:tate/presentation/widgets/label_dropdown.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
 import 'package:tate/presentation/widgets/scaled_image.dart';
@@ -15,9 +16,9 @@ import 'package:tate/presentation/widgets/scaled_image.dart';
 import 'painters/bounding_box_painter.dart';
 
 class ImageWidget extends HookConsumerWidget {
-  const ImageWidget({Key? key, required this.imageProvider}) : super(key: key);
+  const ImageWidget({Key? key, required this.imageData}) : super(key: key);
 
-  final ImageProvider imageProvider;
+  final ImageData imageData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,9 +83,9 @@ class ImageWidget extends HookConsumerWidget {
                 color: Colors.blue[100],
               ),
               ScaledImage(
-                imageWidth: 300,
-                imageHeight: 300,
-                imageProvider: imageProvider,
+                imageWidth: imageData.width,
+                imageHeight: imageData.height,
+                imageData: imageData,
                 onScale: (scale) {
                   ref
                       .read(imageDataControllerProvider.notifier)
