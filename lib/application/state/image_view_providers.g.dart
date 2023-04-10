@@ -6,12 +6,11 @@ part of 'image_view_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hoveredBoxHash() => r'c8b9821ebccc5b4a2d856ba3190b84f341842552';
+String _$hoveredBoxHash() => r'0d8890da9a665e801b742e9136fbe17a8fd0d828';
 
 /// See also [HoveredBox].
 @ProviderFor(HoveredBox)
-final hoveredBoxProvider =
-    AutoDisposeNotifierProvider<HoveredBox, BoundingBox?>.internal(
+final hoveredBoxProvider = NotifierProvider<HoveredBox, BoundingBox?>.internal(
   HoveredBox.new,
   name: r'hoveredBoxProvider',
   debugGetCreateSourceHash:
@@ -20,7 +19,7 @@ final hoveredBoxProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$HoveredBox = AutoDisposeNotifier<BoundingBox?>;
+typedef _$HoveredBox = Notifier<BoundingBox?>;
 String _$mousePositionHash() => r'fa84005fe000ecc7646ab0daef1b33f3b7263941';
 
 /// See also [MousePosition].

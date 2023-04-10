@@ -5,11 +5,15 @@ import 'package:tate/data/models/bounding_box.dart';
 
 part 'image_view_providers.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class HoveredBox extends _$HoveredBox {
   @override
   BoundingBox? build() {
     return null;
+  }
+
+  void updateHoveredBox(BoundingBox? box) {
+    state = box;
   }
 }
 

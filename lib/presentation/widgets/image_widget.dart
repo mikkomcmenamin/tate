@@ -139,6 +139,6 @@ class ImageWidget extends HookConsumerWidget {
       }
     }
 
-    ref.read(hoveredBoxProvider.notifier).state = foundBox;
+    ref.read(hoveredBoxProvider.notifier).updateHoveredBox(foundBox);
   }
 }

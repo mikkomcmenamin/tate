@@ -41,6 +41,8 @@ class LabelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant LabelPainter oldDelegate) {
-    return oldDelegate.hoveredBox != hoveredBox || oldDelegate.matrix != matrix;
+    return oldDelegate.hoveredBox != hoveredBox ||
+        oldDelegate.matrix != matrix ||
+        oldDelegate.hoveredBox?.label != hoveredBox?.label;
   }
 }

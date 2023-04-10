@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/data/models/image_data.dart';
 
@@ -81,6 +82,8 @@ class ImageDataController extends _$ImageDataController {
     newState[imageId] = imageData;
 
     state = newState;
+
+    ref.read(hoveredBoxProvider.notifier).updateHoveredBox(updatedBox);
   }
 
   void setScaleFactorForImage({required int? imageId, required double scaleFactor}) {
