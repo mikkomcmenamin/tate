@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tate/data/models/bounding_box.dart';
+import 'package:tate/presentation/theme/AppColors.dart';
 
 class BoundingBoxPainter extends CustomPainter {
   final Matrix4 matrix;
@@ -13,7 +14,7 @@ class BoundingBoxPainter extends CustomPainter {
     canvas.transform(matrix.storage);
 
     final paint = Paint()
-      ..color = Colors.red
+      ..color = AppColors.accentPrimary
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 

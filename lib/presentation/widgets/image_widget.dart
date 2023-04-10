@@ -79,9 +79,6 @@ class ImageWidget extends HookConsumerWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Container(
-                color: Colors.blue[100],
-              ),
               ScaledImage(
                 imageWidth: imageData.width,
                 imageHeight: imageData.height,
