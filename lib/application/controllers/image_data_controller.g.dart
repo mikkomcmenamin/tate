@@ -58,7 +58,7 @@ final isBoundingBoxesDrawnProvider = AutoDisposeProvider<bool>.internal(
 
 typedef IsBoundingBoxesDrawnRef = AutoDisposeProviderRef<bool>;
 String _$imageDataControllerHash() =>
-    r'ddb5a06ce5fa0f85238ab7e7bbb866e31fdb7ad3';
+    r'8e1a3fa7e7bb8a35c88dbc0e1ed642914fdabedf';
 
 /// See also [ImageDataController].
 @ProviderFor(ImageDataController)

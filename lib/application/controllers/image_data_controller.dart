@@ -88,6 +88,8 @@ class ImageDataController extends _$ImageDataController {
 
     final imageData = state[imageId];
 
+    if (imageData.scaleFactor == scaleFactor) return;
+
     final updatedImageData = imageData.copyWith(scaleFactor: scaleFactor);
 
     final newState = List<ImageData>.from(state);
@@ -95,8 +97,6 @@ class ImageDataController extends _$ImageDataController {
     newState[imageId] = updatedImageData;
 
     state = newState;
-
-    print('set scale to $scaleFactor');
   }
 }
 
