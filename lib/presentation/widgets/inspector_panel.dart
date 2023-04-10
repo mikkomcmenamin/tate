@@ -16,7 +16,7 @@ class InspectorPanel extends ConsumerWidget {
     return TateFrame(
       child: Container(
         width: 300,
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,7 +34,9 @@ class InspectorPanel extends ConsumerWidget {
                 ? Text(
                     'Mouse Position: (${mousePosition.dx.toStringAsFixed(2)}, ${mousePosition.dy.toStringAsFixed(2)})')
                 : const Text("Drag to get mouse position"),
-            scaleFactor != null ? Text('scale factor: $scaleFactor') : const Text('No scale factor'),
+            scaleFactor != null
+                ? Text('Image scale factor: ~${scaleFactor.toStringAsFixed(2)}')
+                : const Text('No scale factor'),
           ],
         ),
       ),
