@@ -54,6 +54,11 @@ class LabelDropdown extends ConsumerWidget {
                         onSubmitted: (value) {
                           if (value.isNotEmpty) {
                             ref.read(projectControllerProvider.notifier).addLabel(value);
+
+                            ref.read(imageDataControllerProvider.notifier).setLabelForBoundingBox(
+                                imageId: ref.watch(selectedImageIndexProvider), boundingBoxId: box.id, label: value);
+
+                            Navigator.pop(context);
                           }
                         }),
                   ),
