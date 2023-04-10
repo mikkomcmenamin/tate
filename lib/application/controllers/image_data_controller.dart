@@ -108,11 +108,9 @@ List<BoundingBox> boundingBoxesOfSelectedImage(BoundingBoxesOfSelectedImageRef r
 
 @riverpod
 bool isBoundingBoxesDrawn(IsBoundingBoxesDrawnRef ref) {
-  final currentImage = ref.watch(currentlySelectedImageDataProvider);
+  final boxes = ref.watch(boundingBoxesOfSelectedImageProvider);
 
-  if (currentImage == null) return false;
-
-  return currentImage.boundingBoxes.isNotEmpty;
+  return boxes.isNotEmpty;
 }
 
 @riverpod

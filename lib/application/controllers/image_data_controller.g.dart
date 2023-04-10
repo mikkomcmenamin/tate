@@ -42,7 +42,7 @@ final boundingBoxesOfSelectedImageProvider =
 typedef BoundingBoxesOfSelectedImageRef
     = AutoDisposeProviderRef<List<BoundingBox>>;
 String _$isBoundingBoxesDrawnHash() =>
-    r'ee6b6874924cbf86f9139c45302dd88dacba603a';
+    r'e5fb34d0b609c16238e40341288124b0df21298f';
 
 /// See also [isBoundingBoxesDrawn].
 @ProviderFor(isBoundingBoxesDrawn)
