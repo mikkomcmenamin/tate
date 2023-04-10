@@ -7,6 +7,8 @@ import 'package:tate/presentation/widgets/draw_bounding_box_button.dart';
 import 'annotate_image_button.dart';
 
 class SideBar extends ConsumerWidget {
+  const SideBar({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showClearButton = ref.watch(isBoundingBoxesDrawnProvider);

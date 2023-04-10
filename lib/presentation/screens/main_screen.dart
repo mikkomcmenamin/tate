@@ -17,10 +17,14 @@ class MainScreen extends ConsumerWidget {
       appBar: const TateAppBar(),
       body: Row(
         children: [
-          Padding(padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8), child: SideBar()),
-          const Expanded(child: ImageAnnotationView()),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: SideBar()),
+          const Expanded(
+              child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: ImageAnnotationView(),
+          )),
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: InspectorPanel(),
           ),
         ],
