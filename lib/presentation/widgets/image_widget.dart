@@ -39,7 +39,7 @@ class ImageWidget extends HookConsumerWidget {
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: SystemMouseCursors.precise,
       onHover: (event) {
         _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition);
       },

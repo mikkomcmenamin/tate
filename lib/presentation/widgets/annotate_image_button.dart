@@ -14,7 +14,7 @@ class AnnotateImageButton extends ConsumerWidget {
     return IconButton(
       icon: const Icon(
         Icons.image,
-        size: 30,
+        size: 25,
         color: Colors.white,
       ),
       onPressed: () async {

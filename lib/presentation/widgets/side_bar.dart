@@ -18,19 +18,22 @@ class SideBar extends ConsumerWidget {
         //color: Theme.of(context).primaryColor,
         padding: EdgeInsets.only(top: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               children: [
                 const AnnotateImageButton(),
-                DrawBoundingBoxButton(),
+                const DrawBoundingBoxButton(),
               ],
             ),
             const Expanded(child: SizedBox()), // Add this
             // Add the "Clear" button here
             if (showClearButton) // Add this condition
               IconButton(
-                icon: const Icon(Icons.clear),
+                icon: const Icon(
+                  Icons.clear,
+                  size: 25,
+                ),
                 color: Colors.white,
                 onPressed: () =>
                     ref.read(imageDataControllerProvider.notifier).clearBoundingBoxes(imageIndex: imageIndex),

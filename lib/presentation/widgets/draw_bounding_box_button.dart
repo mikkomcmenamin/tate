@@ -13,7 +13,7 @@ class DrawBoundingBoxButton extends ConsumerWidget {
     return IconButton(
       icon: const Icon(
         Icons.square_outlined,
-        size: 30,
+        size: 25,
         color: Colors.white,
       ),
       onPressed: () {
