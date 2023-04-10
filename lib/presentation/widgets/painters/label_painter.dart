@@ -34,6 +34,17 @@ class LabelPainter extends CustomPainter {
     canvas.transform(matrix.storage);
 
     textPainter.layout();
+
+    final backgroundPaint = Paint()..color = Colors.black.withOpacity(0.5);
+
+    final backgroundRect = Rect.fromLTWH(
+      labelPosition.dx,
+      labelPosition.dy,
+      textPainter.width,
+      textPainter.height,
+    );
+    canvas.drawRect(backgroundRect, backgroundPaint);
+
     textPainter.paint(canvas, labelPosition);
 
     canvas.restore();
