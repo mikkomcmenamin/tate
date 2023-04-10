@@ -10,6 +10,7 @@ import 'package:tate/application/utils/math_utils.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/presentation/widgets/label_dropdown.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
+import 'package:tate/presentation/widgets/scaled_image.dart';
 
 import 'painters/bounding_box_painter.dart';
 
@@ -80,7 +81,16 @@ class ImageWidget extends HookConsumerWidget {
               Container(
                 color: Colors.blue[100],
               ),
-              FittedBox(fit: BoxFit.contain, alignment: Alignment.topLeft, child: Image(image: imageProvider)), //
+              ScaledImage(
+                imageWidth: 300,
+                imageHeight: 300,
+                imageProvider: imageProvider,
+                onScale: (scale) {
+                  ref
+                      .read(imageDataControllerProvider.notifier)
+                      .setScaleFactorForImage(imageId: imageIndex, scaleFactor: scale);
+                },
+              ),
               CustomPaint(
                 painter: BoundingBoxPainter(
                   matrix: transformation.value,

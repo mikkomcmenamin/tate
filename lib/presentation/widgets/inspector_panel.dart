@@ -1,6 +1,7 @@
 // inspector_panel.dart
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/presentation/theme/reusable_widgets.dart';
 
@@ -10,6 +11,7 @@ class InspectorPanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mousePosition = ref.watch(mousePositionProvider);
+    final scaleFactor = ref.watch(currentlySelectedImageDataProvider)?.scaleFactor;
 
     return TateFrame(
       child: Container(
@@ -32,6 +34,7 @@ class InspectorPanel extends ConsumerWidget {
                 ? Text(
                     'Mouse Position: (${mousePosition.dx.toStringAsFixed(2)}, ${mousePosition.dy.toStringAsFixed(2)})')
                 : const Text("Drag to get mouse position"),
+            scaleFactor != null ? Text('scale factor: $scaleFactor') : const Text('No scale factor'),
           ],
         ),
       ),

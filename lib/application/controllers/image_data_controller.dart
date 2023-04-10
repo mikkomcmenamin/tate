@@ -7,6 +7,7 @@ part 'image_data_controller.g.dart';
 
 enum BoundingBoxUpdateAction { add, update, remove }
 
+//TODO: it would probably be best to handle the currently selected Image state at a time, and not the full list of images.
 @riverpod
 class ImageDataController extends _$ImageDataController {
   @override
@@ -80,6 +81,22 @@ class ImageDataController extends _$ImageDataController {
     newState[imageId] = imageData;
 
     state = newState;
+  }
+
+  void setScaleFactorForImage({required int? imageId, required double scaleFactor}) {
+    if (imageId == null) return;
+
+    final imageData = state[imageId];
+
+    final updatedImageData = imageData.copyWith(scaleFactor: scaleFactor);
+
+    final newState = List<ImageData>.from(state);
+
+    newState[imageId] = updatedImageData;
+
+    state = newState;
+
+    print('set scale to $scaleFactor');
   }
 }
 
