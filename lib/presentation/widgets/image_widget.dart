@@ -1,12 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tate/application/controllers/drawing_mode_controller.dart';
 import 'package:tate/application/controllers/image_data_controller.dart';
 import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
-import 'package:tate/application/utils/math_utils.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/data/models/image_data.dart';
 import 'package:tate/presentation/widgets/label_dropdown.dart';
@@ -22,31 +20,19 @@ class ImageWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final transformationController = useMemoized(() => TransformationController());
     final boxes = ref.watch(boundingBoxesOfSelectedImageProvider);
     final imageIndex = ref.watch(selectedImageIndexProvider);
-
-    final transformation = useState(Matrix4.identity());
     final hoveredBox = ref.watch(hoveredBoxProvider);
-
-    useEffect(() {
-      transformationController.addListener(() {
-        transformation.value = transformationController.value;
-      });
-      return transformationController.dispose;
-    }, []);
-
-    final panEnabled = usePanControl(context);
-
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
+    final panEnabled = usePanControl(context);
     final scaleFactor = imageData.scaleFactor ?? 1;
     final adjustedHoverBoxStartPoint = hoveredBox?.getScaledStartPoint(scaleFactor);
 
     return MouseRegion(
       cursor: SystemMouseCursors.precise,
       onHover: (event) {
-        _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition, scaleFactor);
+        _handleBoundingBoxHover(context, ref, event.localPosition, scaleFactor);
       },
       onEnter: (event) {},
       onExit: (event) {
@@ -81,12 +67,11 @@ class ImageWidget extends HookConsumerWidget {
         },
         onPointerUp: (event) {},
         child: InteractiveViewer(
-          transformationController: transformationController,
           panEnabled: panEnabled.value,
           scaleEnabled: true,
           boundaryMargin: const EdgeInsets.all(2),
           minScale: 1,
-          maxScale: 1,
+          maxScale: 3,
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -102,14 +87,12 @@ class ImageWidget extends HookConsumerWidget {
               ),
               CustomPaint(
                 painter: BoundingBoxPainter(
-                  matrix: transformation.value,
                   imageData: imageData,
                 ),
               ),
               CustomPaint(
                 // Add this new CustomPaint for labels
-                painter: LabelPainter(
-                    matrix: transformation.value, hoveredBox: hoveredBox, scaleFactor: imageData.scaleFactor ?? 1),
+                painter: LabelPainter(hoveredBox: hoveredBox, scaleFactor: imageData.scaleFactor ?? 1),
               ),
               if (hoveredBox != null)
                 Positioned(
@@ -124,11 +107,8 @@ class ImageWidget extends HookConsumerWidget {
     );
   }
 
-  void _handleBoundingBoxHover(
-      BuildContext context, WidgetRef ref, Matrix4 matrix, Offset localPosition, double scaleFactor) {
+  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref, Offset localPosition, double scaleFactor) {
     final boxes = ref.read(boundingBoxesOfSelectedImageProvider);
-    final inverseMatrix = Matrix4.inverted(matrix);
-    final transformedPosition = applyInverseMatrix(inverseMatrix, localPosition);
 
     BoundingBox? foundBox;
 
@@ -143,7 +123,7 @@ class ImageWidget extends HookConsumerWidget {
         scaledEndPoint.dy + 10,
       );
 
-      if (rect.contains(transformedPosition)) {
+      if (rect.contains(localPosition)) {
         foundBox = box;
         break;
       }

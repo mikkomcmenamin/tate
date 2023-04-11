@@ -3,9 +3,8 @@ import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
 
 class LabelPainter extends CustomPainter {
-  LabelPainter({required this.matrix, required this.hoveredBox, required this.scaleFactor});
+  LabelPainter({required this.hoveredBox, required this.scaleFactor});
 
-  final Matrix4 matrix;
   final BoundingBox? hoveredBox;
   final double scaleFactor;
 
@@ -33,7 +32,6 @@ class LabelPainter extends CustomPainter {
     final labelPosition = Offset(rect.left, rect.top - 20);
 
     canvas.save();
-    canvas.transform(matrix.storage);
 
     textPainter.layout();
 
@@ -54,8 +52,6 @@ class LabelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant LabelPainter oldDelegate) {
-    return oldDelegate.hoveredBox != hoveredBox ||
-        oldDelegate.matrix != matrix ||
-        oldDelegate.hoveredBox?.label != hoveredBox?.label;
+    return oldDelegate.hoveredBox != hoveredBox || oldDelegate.hoveredBox?.label != hoveredBox?.label;
   }
 }
