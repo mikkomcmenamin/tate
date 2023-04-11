@@ -40,10 +40,13 @@ class ImageWidget extends HookConsumerWidget {
 
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
+    final scaleFactor = imageData.scaleFactor ?? 1;
+    final adjustedHoverBoxStartPoint = hoveredBox?.startPoint.scale(scaleFactor, scaleFactor);
+
     return MouseRegion(
       cursor: SystemMouseCursors.precise,
       onHover: (event) {
-        _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition);
+        _handleBoundingBoxHover(context, ref, transformation.value, event.localPosition, scaleFactor);
       },
       onEnter: (event) {},
       onExit: (event) {
@@ -54,7 +57,9 @@ class ImageWidget extends HookConsumerWidget {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
             return;
           }
-          final box = BoundingBox(id: boxes.length, startPoint: event.localPosition, endPoint: event.localPosition);
+          final scaleFactor = imageData.scaleFactor ?? 1;
+          final localPosition = event.localPosition.scale(1 / scaleFactor, 1 / scaleFactor);
+          final box = BoundingBox(id: boxes.length, startPoint: localPosition, endPoint: localPosition);
           ref
               .read(imageDataControllerProvider.notifier)
               .addBoundingBoxToImage(imageIndex: imageIndex, boundingBox: box);
@@ -64,9 +69,11 @@ class ImageWidget extends HookConsumerWidget {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
             return;
           }
+          final scaleFactor = imageData.scaleFactor ?? 1;
+          final localPosition = event.localPosition.scale(1 / scaleFactor, 1 / scaleFactor);
           ref
               .read(imageDataControllerProvider.notifier)
-              .updateBoundingBoxInImage(imageIndex: imageIndex, endPoint: event.localPosition);
+              .updateBoundingBoxInImage(imageIndex: imageIndex, endPoint: localPosition);
         },
         onPointerUp: (event) {},
         child: InteractiveViewer(
@@ -92,20 +99,18 @@ class ImageWidget extends HookConsumerWidget {
               CustomPaint(
                 painter: BoundingBoxPainter(
                   matrix: transformation.value,
-                  boxes: boxes,
+                  imageData: imageData,
                 ),
               ),
               CustomPaint(
                 // Add this new CustomPaint for labels
                 painter: LabelPainter(
-                  matrix: transformation.value,
-                  hoveredBox: hoveredBox,
-                ),
+                    matrix: transformation.value, hoveredBox: hoveredBox, scaleFactor: imageData.scaleFactor ?? 1),
               ),
               if (hoveredBox != null)
                 Positioned(
-                  left: hoveredBox.startPoint.dx,
-                  top: hoveredBox.startPoint.dy,
+                  left: adjustedHoverBoxStartPoint?.dx,
+                  top: adjustedHoverBoxStartPoint?.dy,
                   child: LabelDropdown(),
                 ),
             ],
@@ -115,7 +120,8 @@ class ImageWidget extends HookConsumerWidget {
     );
   }
 
-  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref, Matrix4 matrix, Offset localPosition) {
+  void _handleBoundingBoxHover(
+      BuildContext context, WidgetRef ref, Matrix4 matrix, Offset localPosition, double scaleFactor) {
     final boxes = ref.read(boundingBoxesOfSelectedImageProvider);
     final inverseMatrix = Matrix4.inverted(matrix);
     final transformedPosition = applyInverseMatrix(inverseMatrix, localPosition);
@@ -123,11 +129,14 @@ class ImageWidget extends HookConsumerWidget {
     BoundingBox? foundBox;
 
     for (final box in boxes.reversed) {
+      final scaledStartPoint = box.startPoint.scale(scaleFactor, scaleFactor);
+      final scaledEndPoint = box.endPoint.scale(scaleFactor, scaleFactor);
+
       final rect = Rect.fromLTRB(
-        box.startPoint.dx - 10,
-        box.startPoint.dy - 10,
-        box.endPoint.dx + 10,
-        box.endPoint.dy + 10,
+        scaledStartPoint.dx - 10,
+        scaledStartPoint.dy - 10,
+        scaledEndPoint.dx + 10,
+        scaledEndPoint.dy + 10,
       );
 
       if (rect.contains(transformedPosition)) {

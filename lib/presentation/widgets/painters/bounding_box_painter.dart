@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tate/data/models/bounding_box.dart';
+import 'package:tate/data/models/image_data.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
 
 class BoundingBoxPainter extends CustomPainter {
   final Matrix4 matrix;
-  final List<BoundingBox> boxes;
+  final ImageData imageData;
 
-  BoundingBoxPainter({required this.matrix, required this.boxes});
+  BoundingBoxPainter({required this.matrix, required this.imageData});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -18,9 +18,11 @@ class BoundingBoxPainter extends CustomPainter {
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    for (final box in boxes) {
-      final startPoint = box.startPoint;
-      final endPoint = box.endPoint;
+    final scaleFactor = imageData.scaleFactor ?? 1;
+
+    for (final box in imageData.boundingBoxes) {
+      final startPoint = box.startPoint.scale(scaleFactor, scaleFactor);
+      final endPoint = box.endPoint.scale(scaleFactor, scaleFactor);
       final rect = Rect.fromLTRB(
         startPoint.dx,
         startPoint.dy,
@@ -30,20 +32,11 @@ class BoundingBoxPainter extends CustomPainter {
       canvas.drawRect(rect, paint);
     }
 
-    // for (final box in boxes) {
-    //   final transformedBox = box.transform(matrix);
-    //   canvas.drawRect(transformedBox.rect, paint);
-    // }
-
-    // for (final box in transformedBoxes) {
-    //   canvas.drawRect(box.rect, paint);
-    // }
-
     canvas.restore();
   }
 
   @override
   bool shouldRepaint(covariant BoundingBoxPainter oldDelegate) {
-    return oldDelegate.boxes != boxes || oldDelegate.matrix != matrix;
+    return oldDelegate.imageData.boundingBoxes != imageData.boundingBoxes || oldDelegate.matrix != matrix;
   }
 }

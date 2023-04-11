@@ -3,10 +3,11 @@ import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
 
 class LabelPainter extends CustomPainter {
-  LabelPainter({required this.matrix, required this.hoveredBox});
+  LabelPainter({required this.matrix, required this.hoveredBox, required this.scaleFactor});
 
   final Matrix4 matrix;
   final BoundingBox? hoveredBox;
+  final double scaleFactor;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -20,8 +21,9 @@ class LabelPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
 
-    final startPoint = hoveredBox!.startPoint;
-    final endPoint = hoveredBox!.endPoint;
+    final startPoint = hoveredBox!.startPoint.scale(scaleFactor, scaleFactor);
+    final endPoint = hoveredBox!.endPoint.scale(scaleFactor, scaleFactor);
+
     final rect = Rect.fromLTRB(
       startPoint.dx,
       startPoint.dy,

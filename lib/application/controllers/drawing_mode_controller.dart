@@ -12,7 +12,6 @@ class DrawingModeController extends _$DrawingModeController {
   }
 
   void setDrawingMode(EDrawingMode mode) {
-    print('set drawing mode to ${mode}');
     state = mode;
   }
 }
