@@ -41,7 +41,7 @@ class ImageWidget extends HookConsumerWidget {
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
     final scaleFactor = imageData.scaleFactor ?? 1;
-    final adjustedHoverBoxStartPoint = hoveredBox?.startPoint.scale(scaleFactor, scaleFactor);
+    final adjustedHoverBoxStartPoint = hoveredBox?.getScaledStartPoint(scaleFactor);
 
     return MouseRegion(
       cursor: SystemMouseCursors.precise,
@@ -58,8 +58,12 @@ class ImageWidget extends HookConsumerWidget {
             return;
           }
           final scaleFactor = imageData.scaleFactor ?? 1;
-          final localPosition = event.localPosition.scale(1 / scaleFactor, 1 / scaleFactor);
-          final box = BoundingBox(id: boxes.length, startPoint: localPosition, endPoint: localPosition);
+          final box = BoundingBox.withScaledPoints(
+            id: boxes.length,
+            startPoint: event.localPosition,
+            endPoint: event.localPosition,
+            scaleFactor: scaleFactor,
+          );
           ref
               .read(imageDataControllerProvider.notifier)
               .addBoundingBoxToImage(imageIndex: imageIndex, boundingBox: box);
@@ -129,8 +133,8 @@ class ImageWidget extends HookConsumerWidget {
     BoundingBox? foundBox;
 
     for (final box in boxes.reversed) {
-      final scaledStartPoint = box.startPoint.scale(scaleFactor, scaleFactor);
-      final scaledEndPoint = box.endPoint.scale(scaleFactor, scaleFactor);
+      final scaledStartPoint = box.getScaledStartPoint(scaleFactor);
+      final scaledEndPoint = box.getScaledEndPoint(scaleFactor);
 
       final rect = Rect.fromLTRB(
         scaledStartPoint.dx - 10,

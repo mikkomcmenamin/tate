@@ -21,8 +21,8 @@ class BoundingBoxPainter extends CustomPainter {
     final scaleFactor = imageData.scaleFactor ?? 1;
 
     for (final box in imageData.boundingBoxes) {
-      final startPoint = box.startPoint.scale(scaleFactor, scaleFactor);
-      final endPoint = box.endPoint.scale(scaleFactor, scaleFactor);
+      final startPoint = box.getScaledStartPoint(scaleFactor);
+      final endPoint = box.getScaledEndPoint(scaleFactor);
       final rect = Rect.fromLTRB(
         startPoint.dx,
         startPoint.dy,

@@ -21,8 +21,8 @@ class LabelPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
 
-    final startPoint = hoveredBox!.startPoint.scale(scaleFactor, scaleFactor);
-    final endPoint = hoveredBox!.endPoint.scale(scaleFactor, scaleFactor);
+    final startPoint = hoveredBox!.getScaledStartPoint(scaleFactor);
+    final endPoint = hoveredBox!.getScaledEndPoint(scaleFactor);
 
     final rect = Rect.fromLTRB(
       startPoint.dx,
