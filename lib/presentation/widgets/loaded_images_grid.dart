@@ -14,7 +14,6 @@ class LoadedImagesGrid extends ConsumerWidget {
     final selectedIndex = ref.watch(selectedImageIndexProvider);
 
     return SizedBox(
-      height: 150,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: selectedImages.length,
@@ -24,7 +23,6 @@ class LoadedImagesGrid extends ConsumerWidget {
               ref.read(selectedImageIndexProvider.notifier).setSelectedImageIndex(index);
             },
             child: Container(
-              height: 150,
               margin: const EdgeInsets.symmetric(horizontal: 2),
               child: AspectRatio(
                 aspectRatio: 1,

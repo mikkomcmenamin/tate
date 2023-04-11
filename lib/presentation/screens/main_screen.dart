@@ -30,7 +30,7 @@ class MainScreen extends ConsumerWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 100,
+        height: 80,
         child: const LoadedImagesGrid(),
       ),
     );
