@@ -41,4 +41,13 @@ class BoundingBox {
   Offset getScaledEndPoint(double scaleFactor) {
     return endPoint.scale(scaleFactor, scaleFactor);
   }
+
+  List<double> getPoints(double scaleFactor) {
+    return [
+      startPoint.dx,
+      startPoint.dy,
+      endPoint.dx,
+      endPoint.dy,
+    ];
+  }
 }

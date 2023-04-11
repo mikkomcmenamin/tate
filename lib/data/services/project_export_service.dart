@@ -25,12 +25,7 @@ void exportProject(ExportProjectRef ref) async {
       return AnnotationExport(
         type: 'rectangle',
         labelId: box.id,
-        points: [
-          box.startPoint.dx / imageData.scaleFactor!,
-          box.startPoint.dy / imageData.scaleFactor!,
-          box.endPoint.dx / imageData.scaleFactor!,
-          box.endPoint.dy / imageData.scaleFactor!
-        ],
+        points: box.getPoints(imageData.scaleFactor!),
       );
     }).toList();
 

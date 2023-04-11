@@ -25,7 +25,7 @@ class ImageWidget extends HookConsumerWidget {
     final hoveredBox = ref.watch(hoveredBoxProvider);
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
-    final panEnabled = usePanControl(context);
+    final panEnabled = usePanControl(context); //TODO: Fix the keyboard input for pan
     final scaleFactor = imageData.scaleFactor ?? 1;
     final adjustedHoverBoxStartPoint = hoveredBox?.getScaledStartPoint(scaleFactor);
 
