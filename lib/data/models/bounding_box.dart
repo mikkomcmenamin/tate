@@ -38,4 +38,7 @@ class BoundingBox with _$BoundingBox {
       endPoint.dy,
     ];
   }
+
+  double get width => endPoint.dx - startPoint.dx;
+  double get height => endPoint.dy - startPoint.dy;
 }

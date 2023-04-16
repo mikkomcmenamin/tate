@@ -7,9 +7,10 @@ import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/data/models/image_data.dart';
+import 'package:tate/presentation/theme/AppColors.dart';
 import 'package:tate/presentation/widgets/annotation_context_menu.dart';
-import 'package:tate/presentation/widgets/cascading_context_menu.dart';
 import 'package:tate/presentation/widgets/label_dropdown.dart';
+import 'package:tate/presentation/widgets/painters/bounding_box_widget.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
 import 'package:tate/presentation/widgets/scaled_image.dart';
 
@@ -27,11 +28,9 @@ class ImageWidget extends HookConsumerWidget {
     final hoveredBox = ref.watch(hoveredBoxProvider);
     final drawingMode = ref.watch(drawingModeControllerProvider);
 
-    final panEnabled =
-        usePanControl(context); //TODO: Fix the keyboard input for pan
+    final panEnabled = usePanControl(context); //TODO: Fix the keyboard input for pan
     final scaleFactor = imageData.scaleFactor ?? 1;
-    final adjustedHoverBoxStartPoint =
-        hoveredBox?.getScaledStartPoint(scaleFactor);
+    final adjustedHoverBoxStartPoint = hoveredBox?.getScaledStartPoint(scaleFactor);
 
     return MouseRegion(
       cursor: hoveredBox != null ? SystemMouseCursors.basic : SystemMouseCursors.precise,
@@ -45,7 +44,6 @@ class ImageWidget extends HookConsumerWidget {
       child: Listener(
         onPointerDown: (event) {
           if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
-            //_showContextMenu(context, event.position, hoveredBox!, ref, imageIndex);
             return;
           }
           final scaleFactor = imageData.scaleFactor ?? 1;
@@ -60,21 +58,15 @@ class ImageWidget extends HookConsumerWidget {
               .addBoundingBoxToImage(imageIndex: imageIndex, boundingBox: box);
         },
         onPointerMove: (event) {
-          ref
-              .read(mousePositionProvider.notifier)
-              .updateMousePosition(event.localPosition);
-          if (event.buttons == kSecondaryMouseButton ||
-              panEnabled.value ||
-              hoveredBox != null) {
+          ref.read(mousePositionProvider.notifier).updateMousePosition(event.localPosition);
+          if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
             return;
           }
           final scaleFactor = imageData.scaleFactor ?? 1;
-          final localPosition =
-              event.localPosition.scale(1 / scaleFactor, 1 / scaleFactor);
+          final localPosition = event.localPosition.scale(1 / scaleFactor, 1 / scaleFactor);
           ref
               .read(imageDataControllerProvider.notifier)
-              .updateBoundingBoxInImage(
-                  imageIndex: imageIndex, endPoint: localPosition);
+              .updateBoundingBoxInImage(imageIndex: imageIndex, endPoint: localPosition);
         },
         onPointerUp: (event) {},
         child: InteractiveViewer(
@@ -93,28 +85,35 @@ class ImageWidget extends HookConsumerWidget {
                 onScale: (scale) {
                   ref
                       .read(imageDataControllerProvider.notifier)
-                      .setScaleFactorForImage(
-                          imageId: imageIndex, scaleFactor: scale);
+                      .setScaleFactorForImage(imageId: imageIndex, scaleFactor: scale);
                 },
               ),
+              // CustomPaint(
+              //   painter: BoundingBoxPainter(
+              //     imageData: imageData,
+              //   ),
+              // ),
+              ...boxes.map((box) {
+                return BoundingBoxWidget(
+                  box: box,
+                  scaleFactor: scaleFactor,
+                );
+              }).toList(),
               CustomPaint(
-                painter: BoundingBoxPainter(
-                  imageData: imageData,
-                ),
-              ),
-              CustomPaint(
-                // Add this new CustomPaint for labels
-                painter: LabelPainter(
-                    hoveredBox: hoveredBox,
-                    scaleFactor: imageData.scaleFactor ?? 1),
+                painter: LabelPainter(hoveredBox: hoveredBox, scaleFactor: imageData.scaleFactor ?? 1),
               ),
               if (hoveredBox != null)
                 Positioned(
                   left: adjustedHoverBoxStartPoint?.dx,
                   top: adjustedHoverBoxStartPoint?.dy,
-                  child: const LabelDropdown(),
+                  width: (hoveredBox.width) * scaleFactor,
+                  height: (hoveredBox.height) * scaleFactor,
+                  child: AnnotationContextMenu(
+                    child: Container(
+                      color: AppColors.accentPrimary.withOpacity(0.05),
+                    ),
+                  ),
                 ),
-              MyContextMenuRegion(),
             ],
           ),
         ),
@@ -122,8 +121,7 @@ class ImageWidget extends HookConsumerWidget {
     );
   }
 
-  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref,
-      Offset localPosition, double scaleFactor) {
+  void _handleBoundingBoxHover(BuildContext context, WidgetRef ref, Offset localPosition, double scaleFactor) {
     final boxes = ref.read(boundingBoxesOfSelectedImageProvider);
 
     BoundingBox? foundBox;
@@ -147,7 +145,4 @@ class ImageWidget extends HookConsumerWidget {
 
     ref.read(hoveredBoxProvider.notifier).updateHoveredBox(foundBox);
   }
-
-
-
 }
