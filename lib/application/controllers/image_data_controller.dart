@@ -50,6 +50,24 @@ class ImageDataController extends _$ImageDataController {
     state = newState;
   }
 
+  void removeBoundingBoxFromImage({required int? imageIndex, required int boundingBoxId}) {
+    if (imageIndex == null) return;
+
+    final imageData = state[imageIndex];
+
+    final boxIndex = imageData.boundingBoxes.indexWhere((element) => element.id == boundingBoxId);
+
+    if (boxIndex == -1) return;
+
+    imageData.boundingBoxes.removeAt(boxIndex);
+
+    final newState = List<ImageData>.from(state);
+
+    newState[imageIndex] = imageData;
+
+    state = newState;
+  }
+
   void clearBoundingBoxes({required int? imageIndex}) {
     if (imageIndex == null) return;
 

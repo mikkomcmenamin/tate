@@ -7,6 +7,8 @@ import 'package:tate/application/controllers/input_controller.dart';
 import 'package:tate/application/state/image_view_providers.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/data/models/image_data.dart';
+import 'package:tate/presentation/widgets/annotation_context_menu.dart';
+import 'package:tate/presentation/widgets/cascading_context_menu.dart';
 import 'package:tate/presentation/widgets/label_dropdown.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
 import 'package:tate/presentation/widgets/scaled_image.dart';
@@ -42,9 +44,8 @@ class ImageWidget extends HookConsumerWidget {
       },
       child: Listener(
         onPointerDown: (event) {
-          if (event.buttons == kSecondaryMouseButton ||
-              panEnabled.value ||
-              hoveredBox != null) {
+          if (event.buttons == kSecondaryMouseButton || panEnabled.value || hoveredBox != null) {
+            //_showContextMenu(context, event.position, hoveredBox!, ref, imageIndex);
             return;
           }
           final scaleFactor = imageData.scaleFactor ?? 1;
@@ -113,6 +114,7 @@ class ImageWidget extends HookConsumerWidget {
                   top: adjustedHoverBoxStartPoint?.dy,
                   child: const LabelDropdown(),
                 ),
+              MyContextMenuRegion(),
             ],
           ),
         ),
@@ -145,4 +147,7 @@ class ImageWidget extends HookConsumerWidget {
 
     ref.read(hoveredBoxProvider.notifier).updateHoveredBox(foundBox);
   }
+
+
+
 }
