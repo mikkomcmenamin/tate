@@ -13,13 +13,25 @@ Tate is currently tested on macOS, but support for web, Windows, and Linux platf
 - Navigate through imported images using a thumbnail grid and choose an image for annotation
 - Clear drawn bounding boxes
 
-## Todo:
+## ROADMAP Features:
 
-- Manage bounding boxes (add, update, remove)
-- Classify annotations
-- Different annotation tools (polygon drawing, 3d bounding box..)
-- Export dataset (images + annotations information as text)
-- Etc...
+* Auto annotate
+* Bounding boxes, polygons, 3d cuboids, image labels
+* Google cloud integration
+* Manage projects & datasets
+* Manage annotators and their tasks
+* Track annotation work, hours. Export to payroll?
+* Organizations and users management
+* Webhooks
+* 3 different pricing tiers
+* Automated workflows - Zapier?
+* APIs to connect to other services
+
+## FUTURE possibilities:
+* Train your own vision model
+* Export model to cloud, to iPhone/MacOS with CoreML, TensorFlow, etc.
+* Annotate Text, Audio and pointclouds
+* ALL-IN-ONE Machine learning platform :)
 
 ## Getting Started
 

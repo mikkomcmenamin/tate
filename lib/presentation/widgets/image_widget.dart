@@ -30,7 +30,7 @@ class ImageWidget extends HookConsumerWidget {
     final adjustedHoverBoxStartPoint = hoveredBox?.getScaledStartPoint(scaleFactor);
 
     return MouseRegion(
-      cursor: SystemMouseCursors.precise,
+      cursor: hoveredBox != null ? SystemMouseCursors.basic : SystemMouseCursors.precise,
       onHover: (event) {
         _handleBoundingBoxHover(context, ref, event.localPosition, scaleFactor);
       },
