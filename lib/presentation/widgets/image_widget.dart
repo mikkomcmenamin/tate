@@ -9,12 +9,9 @@ import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/data/models/image_data.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
 import 'package:tate/presentation/widgets/annotation_context_menu.dart';
-import 'package:tate/presentation/widgets/label_dropdown.dart';
 import 'package:tate/presentation/widgets/painters/bounding_box_widget.dart';
 import 'package:tate/presentation/widgets/painters/label_painter.dart';
 import 'package:tate/presentation/widgets/scaled_image.dart';
-
-import 'painters/bounding_box_painter.dart';
 
 class ImageWidget extends HookConsumerWidget {
   const ImageWidget({Key? key, required this.imageData}) : super(key: key);
@@ -88,11 +85,6 @@ class ImageWidget extends HookConsumerWidget {
                       .setScaleFactorForImage(imageId: imageIndex, scaleFactor: scale);
                 },
               ),
-              // CustomPaint(
-              //   painter: BoundingBoxPainter(
-              //     imageData: imageData,
-              //   ),
-              // ),
               ...boxes.map((box) {
                 return BoundingBoxWidget(
                   box: box,

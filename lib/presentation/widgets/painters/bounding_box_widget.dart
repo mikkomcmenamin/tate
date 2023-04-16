@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tate/data/models/bounding_box.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
-import 'package:tate/presentation/widgets/annotation_context_menu.dart';
 
 class BoundingBoxWidget extends StatelessWidget {
   final BoundingBox box;
@@ -18,11 +17,9 @@ class BoundingBoxWidget extends StatelessWidget {
 
     return Positioned.fromRect(
       rect: rect,
-      child: AnnotationContextMenu(
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.accentPrimary, width: 2),
-          ),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.accentPrimary, width: 2),
         ),
       ),
     );

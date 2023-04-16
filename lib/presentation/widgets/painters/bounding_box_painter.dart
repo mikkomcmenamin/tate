@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tate/data/models/image_data.dart';
 import 'package:tate/presentation/theme/AppColors.dart';
 
+/// CURRENTLY NOT IN USE, REPLACED BY SIMPLER BOUNDING BOX WIDGET
+/// RESEARCH WHICH IS MORE PERFORMANT
 class BoundingBoxPainter extends CustomPainter {
   final ImageData imageData;
 
