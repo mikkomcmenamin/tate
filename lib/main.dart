@@ -21,7 +21,7 @@ class MyApp extends ConsumerWidget {
     print('main');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Focus(child: MainScreen()),
+      home: const Focus(child: MainScreen()),
       theme: buildThemeData(),
     );
   }

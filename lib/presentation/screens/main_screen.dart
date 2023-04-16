@@ -16,14 +16,16 @@ class MainScreen extends ConsumerWidget {
     return Scaffold(
       appBar: const TateAppBar(),
       body: Row(
-        children: [
-          Padding(padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: SideBar()),
-          const Expanded(
+        children: const [
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              child: SideBar()),
+          Expanded(
               child: Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: ImageAnnotationView(),
           )),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: InspectorPanel(),
           ),

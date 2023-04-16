@@ -7,17 +7,16 @@ part 'project_controller.g.dart';
 class ProjectController extends _$ProjectController {
   @override
   Project build() {
-    return Project(["label1", "label2"]);
+    return const Project(["label1", "label2"]);
   }
 
   void addLabel(String label) {
     state = state.copyWith(labels: [...state.labels, label]);
-    state.labels.forEach((element) {
-      print(element);
-    });
+    state.labels.forEach(print);
   }
 
   void removeLabel(String label) {
-    state = state.copyWith(labels: state.labels.where((element) => element != label).toList());
+    state = state.copyWith(
+        labels: state.labels.where((element) => element != label).toList());
   }
 }

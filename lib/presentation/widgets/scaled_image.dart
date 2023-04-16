@@ -9,7 +9,7 @@ class ScaledImage extends StatelessWidget {
   final ImageData imageData;
   final void Function(double scaleFactor) onScale;
 
-  ScaledImage({
+  const ScaledImage({
     Key? key,
     required this.imageWidth,
     required this.imageHeight,
@@ -28,7 +28,8 @@ class ScaledImage extends StatelessWidget {
 
       final double scaleFactor = math.min(widthScaleFactor, heightScaleFactor);
 
-      final Size imageSize = Size(imageWidth * scaleFactor, imageHeight * scaleFactor);
+      final Size imageSize =
+          Size(imageWidth * scaleFactor, imageHeight * scaleFactor);
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         onScale(scaleFactor);

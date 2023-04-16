@@ -18,14 +18,14 @@ class SideBar extends ConsumerWidget {
       child: Container(
         width: 50, // Adjust the width to your preference
         //color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
-              children: [
-                const AnnotateImageButton(),
-                const DrawBoundingBoxButton(),
+              children: const [
+                AnnotateImageButton(),
+                DrawBoundingBoxButton(),
               ],
             ),
             const Expanded(child: SizedBox()), // Add this
@@ -37,8 +37,9 @@ class SideBar extends ConsumerWidget {
                   size: 25,
                 ),
                 color: Colors.white,
-                onPressed: () =>
-                    ref.read(imageDataControllerProvider.notifier).clearBoundingBoxes(imageIndex: imageIndex),
+                onPressed: () => ref
+                    .read(imageDataControllerProvider.notifier)
+                    .clearBoundingBoxes(imageIndex: imageIndex),
               ),
           ],
         ),
