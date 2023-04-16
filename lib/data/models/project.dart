@@ -1,9 +1,9 @@
-class Project {
-  Project(this.labels);
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-  List<String> labels;
+part 'project.freezed.dart';
 
-  Project copyWith({List<String>? labels}) {
-    return Project(labels ?? this.labels);
-  }
+@freezed
+class Project with _$Project {
+  const factory Project(List<String>labels) = _Project;
 }

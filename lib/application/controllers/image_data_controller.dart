@@ -25,7 +25,7 @@ class ImageDataController extends _$ImageDataController {
 
     final imageData = state[imageIndex];
 
-    imageData.boundingBoxes = [...imageData.boundingBoxes, boundingBox];
+    imageData.boundingBoxes.add(boundingBox);
 
     final newState = List<ImageData>.from(state);
     newState[imageIndex] = imageData;
@@ -55,7 +55,7 @@ class ImageDataController extends _$ImageDataController {
 
     final imageData = state[imageIndex];
 
-    imageData.boundingBoxes = [];
+    imageData.boundingBoxes.clear();
 
     final newState = List<ImageData>.from(state);
 

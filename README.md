@@ -49,7 +49,7 @@ Before you can run the project, make sure you have the following installed:
 
 # Riverpod
 
-When developing, use riverpod generator:
+When developing, use build runner for riverpod_generator and freezed:
 
 `flutter pub run build_runner watch -d`
 
@@ -114,6 +114,27 @@ the provider will be disposed. To prevent this from happening, you can use the f
 ```
 @Riverpod(keepAlive: true)
 ```
+
+# Freezed
+
+Freezed is used to generate immutable classes that have automatic properties, toString, ==, copyWith, toJson, fromJson 
+overrides and methods. Also supports unions and pattern matching. Use the following syntax:
+
+```
+part 'example.g.dart';
+
+@freezed
+class Example with _$Example {
+  const factory Example({
+    required String name,
+    required int age,
+  }) = _Example;
+}
+```
+
+Read more: https://pub.dev/packages/freezed
+
+Also it's recommended to install the "Freezed Snippets" plugin, just as with Riverpod generator. 
 
 # Architecture Overview
 

@@ -1,89 +1,58 @@
-// models/project_export.dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class ProjectExport {
-  ProjectExport({
-    required this.meta,
-    required this.labels,
-    required this.images,
-  });
+part 'project_export.freezed.dart';
+part 'project_export.g.dart';
 
-  final Meta meta;
-  final List<LabelExport> labels;
-  final List<ImageExport> images;
+@freezed
+class ProjectExport with _$ProjectExport {
+  const factory ProjectExport({
+    required Meta meta,
+    required List<LabelExport> labels,
+    required List<ImageExport> images,
+  }) = _ProjectExport;
 
-  Map<String, dynamic> toJson() => {
-        'meta': meta.toJson(),
-        'labels': labels.map((label) => label.toJson()).toList(),
-        'images': images.map((image) => image.toJson()).toList(),
-      };
+  factory ProjectExport.fromJson(Map<String, dynamic> json) => _$ProjectExportFromJson(json);
 }
 
-class Meta {
-  Meta({
-    required this.projectName,
-    required this.size,
-    required this.date,
-  });
+@freezed
+class Meta with _$Meta {
+  const factory Meta({
+    required String projectName,
+    required int size,
+    required String date,
+  }) = _Meta;
 
-  final String projectName;
-  final int size;
-  final String date;
-
-  Map<String, dynamic> toJson() => {
-        'project_name': projectName,
-        'size': size,
-        'date': date,
-      };
+  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 }
 
-class LabelExport {
-  LabelExport({required this.name});
+@freezed
+class LabelExport with _$LabelExport {
+  const factory LabelExport({required String name}) = _LabelExport;
 
-  final String name;
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-      };
+  factory LabelExport.fromJson(Map<String, dynamic> json) => _$LabelExportFromJson(json);
 }
 
-class ImageExport {
-  ImageExport({
-    required this.imageId,
-    required this.name,
-    required this.width,
-    required this.height,
-    required this.annotations,
-  });
+@freezed
+class ImageExport with _$ImageExport {
+  const factory ImageExport({
+    required int imageId,
+    required String name,
+    required int width,
+    required int height,
+    required List<AnnotationExport> annotations,
+  }) = _ImageExport;
 
-  final int imageId;
-  final String name;
-  final int width;
-  final int height;
-  final List<AnnotationExport> annotations;
-
-  Map<String, dynamic> toJson() => {
-        'image_id': imageId,
-        'name': name,
-        'width': width,
-        'height': height,
-        'annotations': annotations.map((annotation) => annotation.toJson()).toList(),
-      };
+  factory ImageExport.fromJson(Map<String, dynamic> json) => _$ImageExportFromJson(json);
 }
 
-class AnnotationExport {
-  AnnotationExport({
-    required this.type,
-    required this.labelId,
-    required this.points,
-  });
+@freezed
+class AnnotationExport with _$AnnotationExport{
+  const factory AnnotationExport({
+    required String type,
+    required int labelId,
+    required List<double> points,
+  }) = _AnnotationExport;
 
-  final String type;
-  final int labelId;
-  final List<double> points;
-
-  Map<String, dynamic> toJson() => {
-        'type': type,
-        'label_id': labelId,
-        'points': points,
-      };
+  factory AnnotationExport.fromJson(Map<String, dynamic> json) => _$AnnotationExportFromJson(json);
 }

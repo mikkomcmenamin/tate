@@ -1,25 +1,13 @@
 import 'dart:ui';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class BoundingBox {
-  int id;
-  Offset startPoint;
-  Offset endPoint;
-  final String? label;
+part 'bounding_box.freezed.dart';
 
-  BoundingBox({required this.id, required this.startPoint, required this.endPoint, this.label});
-
-  BoundingBox copyWith({
-    Offset? startPoint,
-    Offset? endPoint,
-    String? label,
-  }) {
-    return BoundingBox(
-      id: id,
-      startPoint: startPoint ?? this.startPoint,
-      endPoint: endPoint ?? this.endPoint,
-      label: label ?? this.label,
-    );
-  }
+@freezed
+class BoundingBox with _$BoundingBox {
+  const BoundingBox._();
+  const factory BoundingBox({required int id, required Offset startPoint, required Offset endPoint, String? label}) = _BoundingBox;
 
   factory BoundingBox.withScaledPoints({
     required int id,

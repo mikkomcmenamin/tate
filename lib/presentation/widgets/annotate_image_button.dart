@@ -24,7 +24,7 @@ class AnnotateImageButton extends ConsumerWidget {
             final size = ImageSizeGetter.getSize(FileInput(file));
             ref
                 .read(imageDataControllerProvider.notifier)
-                .addImageData(ImageData(imageFile: file, width: size.width, height: size.height));
+                .addImageData(ImageData(imageFile: file, width: size.width, height: size.height, boundingBoxes: []));
           }
         }
       },
